@@ -1,5 +1,9 @@
 package logic;
 
+import logic.enums.MapType;
+import logic.enums.MutationType;
+import logic.enums.PlantType;
+
 public class Starter {
     private int height;
     private int width;

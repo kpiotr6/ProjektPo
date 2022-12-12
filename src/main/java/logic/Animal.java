@@ -1,6 +1,10 @@
 package logic;
 
+import logic.enums.*;
+
 import java.util.Random;
+
+import logic.enums.MutationType;
 
 public abstract class Animal extends AbstractMapElement {
     protected MapDirection mapDirection;
@@ -103,6 +107,11 @@ public abstract class Animal extends AbstractMapElement {
     public int getEnergy() {
         return energy;
     }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
     public void giveBirth(int energy){
         this.energy -= energy;
         this.children++;

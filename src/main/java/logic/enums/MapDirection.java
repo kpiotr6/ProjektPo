@@ -1,5 +1,6 @@
-package logic;
+package logic.enums;
 
+import logic.Vector2d;
 
 public enum MapDirection {
     N(0),
@@ -16,7 +17,7 @@ public enum MapDirection {
     private MapDirection(int i){
         this.order = i;
     }
-    Vector2d toUnitVector(){
+    public Vector2d toUnitVector(){
         return switch (this){
             case N -> new Vector2d(0,1);
             case NE -> new Vector2d(1,1);

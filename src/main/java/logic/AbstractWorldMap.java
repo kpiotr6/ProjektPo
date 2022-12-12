@@ -14,9 +14,11 @@ public abstract class AbstractWorldMap{
     protected Plantator plantator;
     protected int height;
     protected int width;
-    public abstract Vector2d applyMovementEffects(Animal animal,Vector2d current);
+    protected Vector2d lowerLeft;
+    protected Vector2d upperRight;
+    public abstract void applyMovementEffects(Animal animal,Vector2d current);
 
-    public AbstractWorldMap(int height,int width,Starter config){
+    public AbstractWorldMap(int height,int width, Starter config){
          this.height = height;
          this.width = width;
          this.config = config;
@@ -28,8 +30,15 @@ public abstract class AbstractWorldMap{
                  plantator = new ToxicPlantator(this);
                  break;
          }
+         this.lowerLeft = new Vector2d(0,0);
+         this.upperRight = new Vector2d(width, height);
 
     }
+
+    public boolean canMoveTo(Vector2d position) {
+        return lowerLeft.precedes(position) && upperRight.follows(position);
+    }
+
     public static final Comparator<Animal> animalComparator = new Comparator<Animal>() {
         @Override
         public int compare(Animal o1, Animal o2) {
