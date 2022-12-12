@@ -1,9 +1,8 @@
 package logic;
 
 public class Plant extends AbstractMapElement{
-
-    public Plant(Vector2d position) {
-        super(position);
+    public Plant(AbstractWorldMap map,Vector2d positon) {
+        super(map,positon);
     }
     public String getSource(){
         return "src/main/resources/grass.png";

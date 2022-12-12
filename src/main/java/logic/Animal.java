@@ -1,23 +1,21 @@
 package logic;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
-public class Animal extends AbstractMapElement {
-    private MapDirection mapDirection;
-    private AbstractWorldMap map;
-    private int[] genome;
-    private int activated;
-    private int energy;
-    private int eaten;
-    private int children;
-    private int lives;
-    private int died;
-    private boolean dead;
+public abstract class Animal extends AbstractMapElement {
+    protected MapDirection mapDirection;
+    protected AbstractWorldMap map;
+    protected int[] genome;
+    protected int activated;
+    protected int energy;
+    protected int eaten;
+    protected int children;
+    protected int lives;
+    protected int died;
+    protected boolean dead;
 
-    public Animal(Vector2d position,int[] genome,int energy){
-        super(position);
+    public  Animal(Vector2d position,int[] genome,int energy,AbstractWorldMap map){
+        super(map,position);
         Random random = new Random();
         this.mapDirection = MapDirection.fromNumber(random.nextInt(8));
         this.genome = genome;
@@ -29,6 +27,27 @@ public class Animal extends AbstractMapElement {
         this.died = -1;
         this.dead = false;
     }
+    void mutate(){
+        int min = map.config.getMinimumMutation();
+        int max = map.config.getMaximumMutation();
+        Random random = new Random();
+        switch(map.config.getMutationType()){
+            case RANDOMNESS:
+                for(int i=0;i<random.nextInt(min,max+1);i++){
+                    genome[random.nextInt(0,genome.length)] = random.nextInt(0,8);
+                }
+                break;
+            case LIGHT_ADJUSTMENT:
+                for(int i=0;i<random.nextInt(min,max+1);i++){
+                    int r = random.nextInt(0,genome.length);
+                    genome[r] = genome[r]+ 1-random.nextInt(0,2);
+                    if(genome[r] == -1){
+                        genome[r] = 7;
+                    }
+                }
+                break;
+        }
+    }
     @Override
     public String getSource(){
         String source = "src/main/resources/";
@@ -36,7 +55,7 @@ public class Animal extends AbstractMapElement {
             case N -> source+="up.png";
             case NE -> source+="upright.png";
             case E -> source+="right.png";
-            case SE -> sourced+="downright.png";
+            case SE -> source+="downright.png";
             case S -> source+="down.png";
             case SW -> source+="downleft.png";
             case W -> source+="left.png";
@@ -59,11 +78,7 @@ public class Animal extends AbstractMapElement {
                 this.died
         );
     }
-    public void move(){
-        mapDirection.turn(genome[activated]);
-        Vector2d tmpPosition = position.add(mapDirection.toUnitVector());
-        map.applyMovementEffects(this,tmpPosition);
-    }
+    public abstract void move();
 
     public void setMapDirection(MapDirection mapDirection) {
         this.mapDirection = mapDirection;
