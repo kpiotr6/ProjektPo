@@ -16,6 +16,8 @@ public abstract class AbstractWorldMap{
     protected int width;
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
+
+    protected Random rand = new Random();
     public abstract void applyMovementEffects(Animal animal,Vector2d current);
 
     public AbstractWorldMap(int height,int width, Starter config){
@@ -39,6 +41,29 @@ public abstract class AbstractWorldMap{
         return lowerLeft.precedes(position) && upperRight.follows(position);
     }
 
+    public Plant plantAt(Vector2d position){
+        return plants.get(position);
+    }
+
+    public Animal animalAt(Vector2d position){
+        return animals.get(position).first();
+    }
+
+    public boolean isOccupied(Vector2d position){
+        return animalAt(position) != null || plantAt(position) != null;
+    }
+
+    public Object objectAt(Vector2d position){
+        if(animalAt(position) != null){
+            return animalAt(position);
+        }
+        if(plantAt(position) != null){
+            return plantAt(position);
+        }
+        return null;
+    }
+    //TODO: returns ony first animal
+
     public static final Comparator<Animal> animalComparator = new Comparator<Animal>() {
         @Override
         public int compare(Animal o1, Animal o2) {
@@ -51,6 +76,10 @@ public abstract class AbstractWorldMap{
             return o1.getChildren()-o2.getChildren();
         }
     };
+
+    public int generateNumber(int min, int max){
+        return this.rand.nextInt(max - min + 1) + min;
+    }
     public void kill(){
         for(var e:animals.values()){
             Iterator<Animal> i = e.iterator();

@@ -5,12 +5,8 @@ import logic.Animal;
 import logic.Starter;
 import logic.Vector2d;
 
-import java.util.Random;
 
 public class HellMap extends AbstractWorldMap {
-
-    Random rand = new Random();
-
     public HellMap(int width, int height, Starter config) {
         super(width, height, config);
     }

@@ -1,6 +1,7 @@
 package logic;
 
 public class EquatorPlantator extends Plantator{
+
     public EquatorPlantator(AbstractWorldMap map) {
         super(map);
     }

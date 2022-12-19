@@ -1,5 +1,9 @@
 package logic;
 
+import logic.enums.MapType;
+import logic.enums.MutationType;
+import logic.enums.PlantType;
+
 public class Main {
     public static void main(){
         Starter starter = new Starter(
