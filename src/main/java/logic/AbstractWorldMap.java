@@ -155,15 +155,7 @@ public abstract class AbstractWorldMap{
         }
     }
     public void grow(){
-        int specialFields = (int)Math.ceil(height*width*0.2);
-        switch(config.getPlantType()){
-            case EQUATOR:
-
-                break;
-            case TOXIC_CORPSES:
-
-                break;
-        }
+        plantator.plant();
     }
 
 }

@@ -7,13 +7,13 @@ import java.util.Random;
 public abstract class Plantator {
     protected AbstractWorldMap map;
     Random rand = new Random();
+    int specialFields;
 
     public Plantator(AbstractWorldMap map){
         this.map = map;
+        this.specialFields = (int)Math.ceil(this.map.height*this.map.width*0.2);
     }
     public abstract void plant();
 
-    public boolean isSpecialPlant(){
-        return this.map.generateNumber(0,9) < 2;
-    }
+    public abstract boolean isSpecialPlant();
 }
