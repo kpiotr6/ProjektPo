@@ -7,6 +7,8 @@ public class EquatorPlantator extends Plantator{
     private int numOfZones;
     private Vector2d equatorStart;
     private Vector2d equatorEnd;
+    private int totalWeights;
+    private int specialWeights;
 
     public EquatorPlantator(AbstractWorldMap map) {
         super(map);
@@ -14,31 +16,27 @@ public class EquatorPlantator extends Plantator{
         this.equatorStart = new Vector2d(0, ((int)(this.map.height / 2))-(int)(numOfZones/2));
         this.equatorEnd = new Vector2d(this.map.width-1,((int)(this.map.height / 2))+(int)(numOfZones/2)-1);
         if(this.equatorEnd.y < 0 ) this.equatorEnd = new Vector2d(this.equatorEnd.x, 0);
+        this.totalWeights = this.map.width * this.map.height + (this.map.width) * numOfZones * 4;
+        this.specialWeights = (this.map.width) * numOfZones * 5;
     }
 
     @Override
     public void plant() {
         for (int i = 0; i < this.map.config.getNewPlants(); i++) {
             if(normalPlantsNum + specialPlantsNum == this.map.width * this.map.height) return;
-            System.out.println(normalPlantsNum);
-            System.out.println(specialPlantsNum);
-            System.out.println(numOfZones);
-            System.out.println("------------");
             boolean temp =  this.isSpecialPlant();
-            System.out.println(temp);
-            System.out.print(this.map);
+            if(this.normalPlantsNum == this.map.width * this.map.height - (this.map.width) * numOfZones){
+                temp = true;
+            }
+
             if(temp && this.specialPlantsNum < (this.map.width) * numOfZones){
                 int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                 int potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
 
                 int cycle = 0;
                 while(this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null){
-                    potentialNewGrassFieldX = (potentialNewGrassFieldX + 1)%this.map.width;
-                    cycle += 1;
-                    if(cycle == this.map.width-1){
-                        potentialNewGrassFieldY =(potentialNewGrassFieldY + 1)%(equatorEnd.y - equatorStart.y + 1);
-                        cycle = 0;
-                    }
+                    potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
+                    potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
                 }
                 this.map.addPlant(new Plant(this.map, new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)), new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY));
                 this.specialPlantsNum += 1;
@@ -46,18 +44,9 @@ public class EquatorPlantator extends Plantator{
                 int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                 int potentialNewGrassFieldY = this.map.generateNumber(0, map.height-1);
 
-                if(potentialNewGrassFieldY == this.equatorStart.y || potentialNewGrassFieldY == this.equatorEnd.y){
-                    potentialNewGrassFieldY = this.equatorStart.y + 1;
-                }
-                while (this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null){
-                    potentialNewGrassFieldX += 1;
-                    if (potentialNewGrassFieldX == this.map.width){
-                        potentialNewGrassFieldX = 0;
-                        potentialNewGrassFieldY = (potentialNewGrassFieldY + 1)%this.map.height;
-                    }
-                    if(potentialNewGrassFieldY <= this.equatorStart.y && potentialNewGrassFieldY >= this.equatorEnd.y){
-                        potentialNewGrassFieldY = this.equatorEnd.y + 1;
-                    }
+                while (this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null || (potentialNewGrassFieldY >= this.equatorStart.y && potentialNewGrassFieldY <= this.equatorEnd.y)){
+                    potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
+                    potentialNewGrassFieldY = this.map.generateNumber(0, map.height-1);
                 }
                 this.map.addPlant(new Plant(this.map, new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)), new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY));
                 this.normalPlantsNum += 1;
@@ -67,6 +56,55 @@ public class EquatorPlantator extends Plantator{
 
     @Override
     public boolean isSpecialPlant() {
-        return this.map.generateNumber(0,9) < 8;
+        //return this.map.generateNumber(0,9) < 8;
+        return this.map.generateNumber(0,totalWeights-1) < this.specialFields-1;
     }
 }
+
+//    @Override
+//    public void plant() {
+//        System.out.println(this.equatorStart.y + " " + this.equatorEnd.y);
+//        for (int i = 0; i < this.map.config.getNewPlants(); i++) {
+//            if(normalPlantsNum + specialPlantsNum == this.map.width * this.map.height) return;
+//            boolean temp =  this.isSpecialPlant();
+//            if(this.normalPlantsNum == this.map.width * this.map.height - (this.map.width) * numOfZones){
+//                temp = true;
+//            }
+//            if(temp && this.specialPlantsNum < (this.map.width) * numOfZones){
+//                int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
+//                int potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
+//
+//                int cycle = 0;
+//                while(this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null){
+//                    potentialNewGrassFieldX = (potentialNewGrassFieldX + 1)%this.map.width;
+//                    cycle += 1;
+//                    if(cycle == this.map.width-1){
+//                        potentialNewGrassFieldY = (potentialNewGrassFieldY + 1);
+//                        if (potentialNewGrassFieldY > equatorEnd.y) potentialNewGrassFieldY = equatorStart.y;
+//                        cycle = 0;
+//                    }
+//                }
+//                this.map.addPlant(new Plant(this.map, new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)), new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY));
+//                this.specialPlantsNum += 1;
+//            }else{
+//                int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
+//                int potentialNewGrassFieldY = this.map.generateNumber(0, map.height-1);
+//
+//                if(potentialNewGrassFieldY >= this.equatorStart.y && potentialNewGrassFieldY <= this.equatorEnd.y){
+//                    potentialNewGrassFieldY = this.equatorEnd.y + 1;
+//                }
+//                while (this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null){
+//                    potentialNewGrassFieldX += 1;
+//                    if (potentialNewGrassFieldX == this.map.width){
+//                        potentialNewGrassFieldX = 0;
+//                        potentialNewGrassFieldY = (potentialNewGrassFieldY + 1)%this.map.height;
+//                    }
+//                    if(potentialNewGrassFieldY >= this.equatorStart.y && potentialNewGrassFieldY <= this.equatorEnd.y){
+//                        potentialNewGrassFieldY = this.equatorEnd.y + 1;
+//                    }
+//                }
+//                this.map.addPlant(new Plant(this.map, new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)), new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY));
+//                this.normalPlantsNum += 1;
+//            }
+//        }
+//    }
