@@ -155,13 +155,17 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     }
 
     public boolean isDead() {
-        System.out.println(this.getEnergy());
         if(energy <= 0){
             died = 0;
             this.dead = true;
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.getMapDirection().toString();
     }
 
     @Override

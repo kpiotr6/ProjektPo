@@ -17,7 +17,7 @@ public abstract class AbstractWorldMap{
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
     private int animalCount;
-
+    private MapVisualizer drawingModule = new MapVisualizer(this);
     protected Random rand = new Random();
     public abstract void applyMovementEffects(Animal animal,Vector2d old,Vector2d current);
 
@@ -34,7 +34,7 @@ public abstract class AbstractWorldMap{
                  break;
          }
          this.lowerLeft = new Vector2d(0,0);
-         this.upperRight = new Vector2d(width, height);
+         this.upperRight = new Vector2d(width-1, height-1);
 
     }
 
@@ -51,6 +51,7 @@ public abstract class AbstractWorldMap{
     }
 
     public Animal animalAt(Vector2d position){
+        if(animals.get(position) == null) return null;
         return animals.get(position).first();
     }
 
@@ -164,7 +165,7 @@ public abstract class AbstractWorldMap{
         plantator.plant();
     }
 
-    protected void addToMap(Animal animal, Vector2d position){
+    protected void addToAnimals(Animal animal, Vector2d position){
         this.animals.computeIfAbsent(animal.getPosition(), k -> new TreeSet<Animal>());
         this.animals.get(position).add(animal);
     }
@@ -174,9 +175,17 @@ public abstract class AbstractWorldMap{
         this.newAnimals.get(position).add(animal);
     }
 
+    protected void addPlant(Plant plant, Vector2d position){
+        this.plants.put(position, plant);
+    }
+
     public void initAnimal(Animal animal){
-        this.addToMap(animal, animal.getPosition());
+        this.addToAnimals(animal, animal.getPosition());
         this.animalCount += 1;
     }
 
+    @Override
+    public String toString() {
+        return drawingModule.draw(this.lowerLeft, this.upperRight);
+    }
 }

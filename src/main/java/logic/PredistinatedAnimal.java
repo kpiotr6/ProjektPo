@@ -7,7 +7,7 @@ public class PredistinatedAnimal extends Animal {
         super(position, genome, energy, map);
     }
     public void move(){
-        mapDirection.turn(genome[activated]);
+        this.mapDirection = this.mapDirection.turn(genome[activated]);
         Random random = new Random();
         int r = random.nextInt(0,10);
         if(r<=7){
@@ -21,12 +21,6 @@ public class PredistinatedAnimal extends Animal {
         }
         Vector2d oldPosition = position;
         Vector2d tmpPosition = position.add(mapDirection.toUnitVector());
-        try{
-            this.map.applyMovementEffects(this,oldPosition,tmpPosition);
-        }catch (Exception e){
-            System.out.println("animal");
-            System.out.println(e);
-        }
-
+        this.map.applyMovementEffects(this,oldPosition,tmpPosition);
     }
 }

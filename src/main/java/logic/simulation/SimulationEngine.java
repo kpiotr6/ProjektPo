@@ -10,7 +10,7 @@ public class SimulationEngine {
     public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
         int index = 0;
         for ( Vector2d position: positions) {
-            Animal currAnimal = new PredistinatedAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
+            Animal currAnimal = new MadAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
             map.initAnimal(currAnimal);
             index += 1;
         }
@@ -19,11 +19,13 @@ public class SimulationEngine {
 
     public void run(){
         while (this.map.getAnimalCount() > 0){
-            //System.out.println(this.map.getAnimalCount());
+//            System.out.println(this.map.getAnimalCount());
+            System.out.print(this.map);
+            this.map.grow();
             this.map.kill();
             this.map.move();
             //TimeUnit.SECONDS.sleep(2);
-            //System.out.print("m");
+
         }
     }
 }
