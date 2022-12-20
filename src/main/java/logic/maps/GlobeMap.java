@@ -14,7 +14,6 @@ public class GlobeMap extends AbstractWorldMap {
     @Override
     public void applyMovementEffects(Animal animal,Vector2d old, Vector2d current) {
         Vector2d position = current;
-        System.out.println("current" + position);
         if(!this.canMoveTo(current)){
             if(current.y >= this.height || current.y < 0) {
                 animal.setMapDirection(animal.getMapDirection().turn(4));
@@ -28,7 +27,6 @@ public class GlobeMap extends AbstractWorldMap {
         else animal.setPosition(current);
 
         animal.setEnergy(animal.getEnergy() - 1);
-        System.out.println("after" + position);
         this.addToNewAnimals(animal, position);
     }
 
