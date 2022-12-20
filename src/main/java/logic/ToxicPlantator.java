@@ -11,4 +11,9 @@ public class ToxicPlantator extends Plantator {
     public void plant(){
 
     }
+
+    @Override
+    public boolean isSpecialPlant() {
+        return false;
+    }
 }

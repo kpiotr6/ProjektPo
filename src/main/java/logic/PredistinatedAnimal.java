@@ -19,7 +19,14 @@ public class PredistinatedAnimal extends Animal {
                 activated = random.nextInt(0,genome.length);
             }
         }
+        Vector2d oldPosition = position;
         Vector2d tmpPosition = position.add(mapDirection.toUnitVector());
-        map.applyMovementEffects(this,tmpPosition);
+        try{
+            this.map.applyMovementEffects(this,oldPosition,tmpPosition);
+        }catch (Exception e){
+            System.out.println("animal");
+            System.out.println(e);
+        }
+
     }
 }
