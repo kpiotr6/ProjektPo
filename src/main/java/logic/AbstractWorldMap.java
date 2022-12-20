@@ -2,6 +2,7 @@ package logic;
 
 
 import java.util.*;
+import java.util.Random;
 
 public abstract class AbstractWorldMap{
 
@@ -136,7 +137,8 @@ public abstract class AbstractWorldMap{
             int firstGenes = config.getGenomeLength()*first.getEnergy()/(first.getEnergy()+ second.getEnergy());
             int secondGenes = config.getGenomeLength() - firstGenes;
             Random random = new Random();
-            int side = random.nextInt(0,2);
+
+            int side = random.nextInt(2);
             int[] firstGenome = first.getGenome();
             int[] secondGenome = second.getGenome();
 

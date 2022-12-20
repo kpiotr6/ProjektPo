@@ -9,14 +9,14 @@ public class PredistinatedAnimal extends Animal {
     public void move(){
         this.mapDirection = this.mapDirection.turn(genome[activated]);
         Random random = new Random();
-        int r = random.nextInt(0,10);
+        int r = random.nextInt(10);
         if(r<=7){
             activated = (activated+1)%genome.length;
         }
         else{
             int old = activated;
             while(old == activated) {
-                activated = random.nextInt(0,genome.length);
+                activated = random.nextInt(genome.length);
             }
         }
         Vector2d oldPosition = position;

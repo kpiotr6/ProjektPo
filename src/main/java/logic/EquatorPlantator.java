@@ -18,6 +18,7 @@ public class EquatorPlantator extends Plantator{
         if(this.equatorEnd.y < 0 ) this.equatorEnd = new Vector2d(this.equatorEnd.x, 0);
         this.totalWeights = this.map.width * this.map.height + (this.map.width) * numOfZones * 4;
         this.specialWeights = (this.map.width) * numOfZones * 5;
+
     }
 
     @Override
@@ -25,10 +26,12 @@ public class EquatorPlantator extends Plantator{
         for (int i = 0; i < this.map.config.getNewPlants(); i++) {
             if(normalPlantsNum + specialPlantsNum == this.map.width * this.map.height) return;
             boolean temp =  this.isSpecialPlant();
+
             if(this.normalPlantsNum == this.map.width * this.map.height - (this.map.width) * numOfZones){
                 temp = true;
-            }
 
+            }
+            System.out.println(temp);
             if(temp && this.specialPlantsNum < (this.map.width) * numOfZones){
                 int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                 int potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
@@ -57,7 +60,9 @@ public class EquatorPlantator extends Plantator{
     @Override
     public boolean isSpecialPlant() {
         //return this.map.generateNumber(0,9) < 8;
-        return this.map.generateNumber(0,totalWeights-1) < this.specialFields-1;
+        return this.map.generateNumber(0,5) <= 4;
+        //return this.map.generateNumber(0,totalWeights-1) < this.specialWeights-1;
+
     }
 }
 

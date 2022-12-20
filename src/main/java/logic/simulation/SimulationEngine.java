@@ -18,12 +18,17 @@ public class SimulationEngine {
     }
 
     public void run(){
+//        int i =0;
         while (this.map.getAnimalCount() > 0){
 //            System.out.println(this.map.getAnimalCount());
             System.out.print(this.map);
             this.map.grow();
             this.map.kill();
             this.map.move();
+//            if(i>3){
+//                return;
+//            }
+//            i+=1;
             //TimeUnit.SECONDS.sleep(2);
 
         }
