@@ -12,15 +12,24 @@ public class GlobeMap extends AbstractWorldMap {
     }
 
     @Override
-    public void applyMovementEffects(Animal animal, Vector2d current) {
+    public void applyMovementEffects(Animal animal,Vector2d old, Vector2d current) {
+        Vector2d position = current;
+        System.out.println("current" + position);
         if(!this.canMoveTo(current)){
-            if(current.y >= this.height || current.y < 0) animal.setMapDirection(animal.getMapDirection().turn(4));
-            else if (current.x >= width || current.x < 0) animal.setPosition(new Vector2d(current.x < 0 ? this.width-1 : 0,  current.y));
+            if(current.y >= this.height || current.y < 0) {
+                animal.setMapDirection(animal.getMapDirection().turn(4));
+                position = old;
+            }
+            else if (current.x >= width || current.x < 0) {
+                position = new Vector2d(current.x < 0 ? this.width-1 : 0,  current.y);
+                animal.setPosition(position);
+            };
         }
         else animal.setPosition(current);
 
         animal.setEnergy(animal.getEnergy() - 1);
-        this.newAnimals.get(current).add(animal);
+        System.out.println("after" + position);
+        this.addToNewAnimals(animal, position);
     }
 
 }

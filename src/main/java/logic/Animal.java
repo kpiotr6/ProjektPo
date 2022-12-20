@@ -2,13 +2,15 @@ package logic;
 
 import logic.enums.*;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
 import java.util.Random;
 
 import logic.enums.MutationType;
 
-public abstract class Animal extends AbstractMapElement {
+public abstract class Animal extends AbstractMapElement implements Comparable<Animal> {
     protected MapDirection mapDirection;
-    protected AbstractWorldMap map;
     protected int[] genome;
     protected int activated;
     protected int energy;
@@ -153,12 +155,37 @@ public abstract class Animal extends AbstractMapElement {
     }
 
     public boolean isDead() {
-        if(energy == 0){
+        System.out.println(this.getEnergy());
+        if(energy <= 0){
             died = 0;
             this.dead = true;
             return true;
         }
         return false;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return activated == animal.activated && energy == animal.energy && eaten == animal.eaten && children == animal.children && lives == animal.lives && died == animal.died && dead == animal.dead && mapDirection == animal.mapDirection && map.equals(animal.map) && Arrays.equals(genome, animal.genome);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(mapDirection, map, activated, energy, eaten, children, lives, died, dead);
+        result = 31 * result + Arrays.hashCode(genome);
+        return result;
+    }
+
+    public int compareTo(Animal o2){
+        if(this.getEnergy()!=o2.getEnergy()){
+            return this.getEnergy()-o2.getEnergy();
+        }
+        if(this.getLives()!= o2.getLives()){
+            return this.getLives()-o2.getLives();
+        }
+        return this.getChildren()-o2.getChildren();
     }
 }
