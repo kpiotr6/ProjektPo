@@ -190,6 +190,9 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         if(this.getLives()!= o2.getLives()){
             return this.getLives()-o2.getLives();
         }
-        return this.getChildren()-o2.getChildren();
+        if(this.getChildren() != o2.getChildren()){
+            return this.getChildren()-o2.getChildren();
+        }
+        return Math.random() < 0.5 ? -1 : 1;
     }
 }

@@ -59,6 +59,18 @@ public class EquatorPlantator extends Plantator{
         //return this.map.generateNumber(0,totalWeights-1) < this.specialWeights-1;
 
     }
+
+    public boolean isSpecialField(Vector2d position){
+        return position.y >= this.equatorStart.y && position.y <= this.equatorEnd.y;
+    }
+
+    public void plantEaten(Vector2d position){
+        if(isSpecialField(position)){
+            this.specialPlantsNum -= 1;
+        }else{
+            this.normalPlantsNum -= 1;
+        }
+    }
 }
 
 //    @Override

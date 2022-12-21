@@ -15,10 +15,9 @@ public class HellMap extends AbstractWorldMap {
     public void applyMovementEffects(Animal animal,Vector2d old,  Vector2d current) {
         if(!this.canMoveTo(current)){
             current = getRandomPosition();
-            animal.setEnergy(animal.getEnergy() - this.config.getEnergyToChild());
-        }else{
-            animal.setEnergy(animal.getEnergy() - 1);
+            animal.setEnergy(animal.getEnergy() - this.config.getEnergyToChild() );
         }
+        animal.setEnergy(animal.getEnergy() - 1);
 
         animal.setPosition(current);
         this.addToNewAnimals(animal, current);
