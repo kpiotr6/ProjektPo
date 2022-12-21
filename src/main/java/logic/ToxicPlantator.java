@@ -16,4 +16,14 @@ public class ToxicPlantator extends Plantator {
     public boolean isSpecialPlant() {
         return false;
     }
+
+    @Override
+    public boolean isSpecialField(Vector2d position) {
+        return false;
+    }
+
+    @Override
+    public void plantEaten(Vector2d position) {
+
+    }
 }
