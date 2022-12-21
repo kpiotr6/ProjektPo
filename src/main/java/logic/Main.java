@@ -16,19 +16,19 @@ public class Main {
             20,//        plantEnergy
             20,//        newPlants
             PlantType.EQUATOR,//        plantType
-            5,//        startAnimalNumber
-            100,//        startAnimalEnergy
+            1,//        startAnimalNumber
+            7,//        startAnimalEnergy
             30,//        energyToReproduce
             10,//        energyToChild
             3,//        minimumMutation
             10,//        maximumMutation
             MutationType.LIGHT_ADJUSTMENT,//        mutationType
             4,//        genomeLength
-            AnimalBehaviour.FULL_PREDISTINATION//        animalBehaviour
+            AnimalBehaviour.A_LITTLE_BIT_OF_MADNESS//        animalBehaviour
         );
-        AbstractWorldMap map = new GlobeMap(100,100,starter);
+        AbstractWorldMap map = new GlobeMap(10,10,starter);
         try{
-            SimulationEngine engine = new SimulationEngine(map, new Vector2d[]{new Vector2d(2,2), new Vector2d(3,3)}, new int[][]{{0,0,0,0},{0,0,0,0}}, starter);
+            SimulationEngine engine = new SimulationEngine(map, new Vector2d[]{new Vector2d(2,2), new Vector2d(2,2)}, new int[][]{{0,0,0,0},{0,0,0,0}}, starter);
             engine.run();
         }
         catch(Exception e){

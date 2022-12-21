@@ -16,4 +16,8 @@ public abstract class Plantator {
     public abstract void plant();
 
     public abstract boolean isSpecialPlant();
+
+    public abstract boolean isSpecialField(Vector2d position);
+
+    public abstract void plantEaten(Vector2d position);
 }

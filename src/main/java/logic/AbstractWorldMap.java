@@ -6,7 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractWorldMap{
 
-    final protected HashMap<Vector2d, Plant> plants = new HashMap<>();
+    protected HashMap<Vector2d, Plant> plants = new HashMap<>();
+    protected HashMap<Vector2d, Plant> newPlants = new HashMap<>();
     protected HashMap<Vector2d, SortedSet<Animal>> animals = new HashMap<>();
     protected HashMap<Vector2d, SortedSet<Animal>> newAnimals = new HashMap<>();
     //protected HashMap<Vector2d,Integer> toxic = new HashMap<>();
@@ -19,7 +20,7 @@ public abstract class AbstractWorldMap{
     protected Vector2d upperRight;
     private int animalCount;
     private MapVisualizer drawingModule = new MapVisualizer(this);
-    protected Random rand = new Random();
+    protected Random rand = new Random(2137);
     public abstract void applyMovementEffects(Animal animal,Vector2d old,Vector2d current);
 
     public AbstractWorldMap(int height,int width, Starter config){
@@ -113,26 +114,30 @@ public abstract class AbstractWorldMap{
         animals = tmp;
     }
     public void consume(){
+        newPlants.clear();
         for (var e:plants.entrySet()) {
             Vector2d position = e.getKey();
             var onPosition = animals.get(position);
-            if(animals.size()==0){
+            if(onPosition == null || animals.size()==0){
+                newPlants.put(position, e.getValue());
                 continue;
             }
-            Animal strongest = animals.get(onPosition).first();
+            Animal strongest = onPosition.first();
             strongest.eat(config.getPlantEnergy());
-            plants.remove(position);
+            plantator.plantEaten(position);
         }
+        var tmp = newPlants;
+        newPlants = plants;
+        plants = tmp;
     }
     public void multiplicate(){
         for (var e:this.animals.values()) {
             if(e.size()<2 || e.first().getEnergy()<config.getEnergyToReproduce()){
                 return;
             }
-            Animal first = e.first();
-            e.remove(first);
-            Animal second = e.first();
-            e.remove(second);
+            Iterator<Animal> it = e.iterator();
+            Animal first = it.next();
+            Animal second = it.next();
             int[] childGenome = new int[config.getGenomeLength()];
             int firstGenes = config.getGenomeLength()*first.getEnergy()/(first.getEnergy()+ second.getEnergy());
             int secondGenes = config.getGenomeLength() - firstGenes;
@@ -158,8 +163,6 @@ public abstract class AbstractWorldMap{
             first.giveBirth(firstEnergyDifference);
             second.giveBirth(secondEnergyDifference);
             e.add(child);
-            e.add(first);
-            e.add(second);
         }
     }
     public void grow(){
