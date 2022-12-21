@@ -5,6 +5,8 @@ import logic.enums.PlantType;
 import java.util.Random;
 
 public abstract class Plantator {
+    protected int specialPlantsNum = 0;
+    protected int normalPlantsNum = 0;
     protected AbstractWorldMap map;
     Random rand = new Random();
     int specialFields;
@@ -14,6 +16,6 @@ public abstract class Plantator {
         this.specialFields = (int)Math.ceil(this.map.height*this.map.width*0.2);
     }
     public abstract void plant();
-
     public abstract boolean isSpecialPlant();
+
 }

@@ -1,9 +1,6 @@
 package logic;
 
 public class EquatorPlantator extends Plantator{
-
-    private int specialPlantsNum = 0;
-    private int normalPlantsNum = 0;
     private int numOfZones;
     private Vector2d equatorStart;
     private Vector2d equatorEnd;
@@ -26,12 +23,10 @@ public class EquatorPlantator extends Plantator{
         for (int i = 0; i < this.map.config.getNewPlants(); i++) {
             if(normalPlantsNum + specialPlantsNum == this.map.width * this.map.height) return;
             boolean temp =  this.isSpecialPlant();
-
             if(this.normalPlantsNum == this.map.width * this.map.height - (this.map.width) * numOfZones){
                 temp = true;
 
             }
-            System.out.println(temp);
             if(temp && this.specialPlantsNum < (this.map.width) * numOfZones){
                 int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                 int potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
