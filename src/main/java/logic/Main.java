@@ -14,6 +14,7 @@ public class Main {
             MapType.GLOBE,//        mapType
             5,//        startPlantNumber
             20,//        plantEnergy
+
             20,//        newPlants
             PlantType.EQUATOR,//        plantType
             1,//        startAnimalNumber
@@ -26,7 +27,10 @@ public class Main {
             4,//        genomeLength
             AnimalBehaviour.A_LITTLE_BIT_OF_MADNESS//        animalBehaviour
         );
+
+
         AbstractWorldMap map = new GlobeMap(10,10,starter);
+
         try{
             SimulationEngine engine = new SimulationEngine(map, new Vector2d[]{new Vector2d(2,2), new Vector2d(2,2)}, new int[][]{{0,0,0,0},{0,0,0,0}}, starter);
             engine.run();

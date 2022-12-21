@@ -24,12 +24,15 @@ public class SimulationEngine {
     }
 
     public void run(){
+
         this.map.grow();
+
         while (this.map.getAnimalCount() > 0){
 //            System.out.println(this.map.getAnimalCount());
             System.out.print(this.map);
             this.map.kill();
             this.map.move();
+
             this.map.consume();
             this.map.multiplicate();
             this.map.grow();

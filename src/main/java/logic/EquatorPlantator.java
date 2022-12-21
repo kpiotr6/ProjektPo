@@ -1,9 +1,6 @@
 package logic;
 
 public class EquatorPlantator extends Plantator{
-
-    private int specialPlantsNum = 0;
-    private int normalPlantsNum = 0;
     private int numOfZones;
     private Vector2d equatorStart;
     private Vector2d equatorEnd;
@@ -18,6 +15,7 @@ public class EquatorPlantator extends Plantator{
         if(this.equatorEnd.y < 0 ) this.equatorEnd = new Vector2d(this.equatorEnd.x, 0);
         this.totalWeights = this.map.width * this.map.height + (this.map.width) * numOfZones * 4;
         this.specialWeights = (this.map.width) * numOfZones * 5;
+
     }
 
     @Override
@@ -27,8 +25,8 @@ public class EquatorPlantator extends Plantator{
             boolean temp =  this.isSpecialPlant();
             if(this.normalPlantsNum == this.map.width * this.map.height - (this.map.width) * numOfZones){
                 temp = true;
-            }
 
+            }
             if(temp && this.specialPlantsNum < (this.map.width) * numOfZones){
                 int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                 int potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
@@ -57,7 +55,9 @@ public class EquatorPlantator extends Plantator{
     @Override
     public boolean isSpecialPlant() {
         //return this.map.generateNumber(0,9) < 8;
-        return this.map.generateNumber(0,totalWeights-1) < this.specialFields-1;
+        return this.map.generateNumber(0,5) <= 4;
+        //return this.map.generateNumber(0,totalWeights-1) < this.specialWeights-1;
+
     }
 
     public boolean isSpecialField(Vector2d position){

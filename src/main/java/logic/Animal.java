@@ -39,14 +39,14 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         Random random = new Random();
         switch(map.config.getMutationType()){
             case RANDOMNESS:
-                for(int i=0;i<random.nextInt(min,max+1);i++){
-                    genome[random.nextInt(0,genome.length)] = random.nextInt(0,8);
+                for(int i=0;i<random.nextInt(max+1-min)+min;i++){
+                    genome[random.nextInt(genome.length)] = random.nextInt(8);
                 }
                 break;
             case LIGHT_ADJUSTMENT:
-                for(int i=0;i<random.nextInt(min,max+1);i++){
-                    int r = random.nextInt(0,genome.length);
-                    genome[r] = genome[r]+ 1-random.nextInt(0,2);
+                for(int i=0;i<random.nextInt(max+1-min)+min;i++){
+                    int r = random.nextInt(genome.length);
+                    genome[r] = genome[r]+ 1-random.nextInt(2);
                     if(genome[r] == -1){
                         genome[r] = 7;
                     }
