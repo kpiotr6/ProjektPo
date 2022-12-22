@@ -3,7 +3,6 @@ import logic.enums.MapDirection;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
-import logic.maps.GlobeMap;
 import logic.maps.HellMap;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class HellMapTest {
 
         int index = 0;
         for ( Vector2d position: positions) {
-            Animal currAnimal = new MadAnimal(position, genoms[index], starter.getStartAnimalEnergy(), map);
+            Animal currAnimal = new PredistinatedAnimal(position, genoms[index], starter.getStartAnimalEnergy(), map);
             currAnimal.setMapDirection(directions[index]);
             animals[index] = currAnimal;
             index += 1;

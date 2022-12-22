@@ -6,6 +6,8 @@ import logic.enums.PlantType;
 import logic.maps.GlobeMap;
 import logic.simulation.SimulationEngine;
 
+import java.util.Random;
+
 public class Main {
     public static void main(String[] args){
         Starter starter = new Starter(
@@ -15,15 +17,15 @@ public class Main {
             5,//        startPlantNumber
             20,//        plantEnergy
 
-            20,//        newPlants
-            PlantType.EQUATOR,//        plantType
-            1,//        startAnimalNumber
-            7,//        startAnimalEnergy
-            30,//        energyToReproduce
+            30,//        newPlants
+            PlantType.TOXIC_CORPSES,//        plantType
+            5,//        startAnimalNumber
+            20,//        startAnimalEnergy
+            5,//        energyToReproduce
             10,//        energyToChild
             3,//        minimumMutation
             10,//        maximumMutation
-            MutationType.LIGHT_ADJUSTMENT,//        mutationType
+            MutationType.RANDOMNESS,//        mutationType
             4,//        genomeLength
             AnimalBehaviour.A_LITTLE_BIT_OF_MADNESS//        animalBehaviour
         );
@@ -32,12 +34,20 @@ public class Main {
         AbstractWorldMap map = new GlobeMap(10,10,starter);
 
         try{
-            SimulationEngine engine = new SimulationEngine(map, new Vector2d[]{new Vector2d(2,2), new Vector2d(2,2)}, new int[][]{{0,0,0,0},{0,0,0,0}}, starter);
+            Vector2d[] vector2ds = new Vector2d[starter.getStartAnimalNumber()];
+            Random random = new Random();
+            int[][] genoms = new int[starter.getStartAnimalNumber()][starter.getGenomeLength()];
+            for(int i=0;i<vector2ds.length;i++){
+                vector2ds[i] = new Vector2d(random.nextInt(map.width),random.nextInt(map.height) );
+                genoms[i] = new int[]{0, 0, 0, 0};
+            }
+            SimulationEngine engine = new SimulationEngine(map, vector2ds, genoms, starter);
             engine.run();
         }
         catch(Exception e){
             System.out.println("aa");
             System.out.println(e);
+            e.printStackTrace();
             System.out.println("aa");
         }
 

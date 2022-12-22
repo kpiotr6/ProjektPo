@@ -86,6 +86,11 @@ public class ToxicPlantator extends Plantator {
 
     @Override
     public void plantEaten(Vector2d position) {
-
+        HashSet<Vector2d> set = new HashSet<>(listStandardFields());
+        if(set.contains(position)){
+            normalPlantsNum--;
+            return;
+        }
+        specialPlantsNum--;
     }
 }

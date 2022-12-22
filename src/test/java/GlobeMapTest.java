@@ -15,7 +15,7 @@ public class GlobeMapTest {
 
         int index = 0;
         for ( Vector2d position: positions) {
-            Animal currAnimal = new MadAnimal(position, genoms[index], starter.getStartAnimalEnergy(), map);
+            Animal currAnimal = new PredistinatedAnimal(position, genoms[index], starter.getStartAnimalEnergy(), map);
             currAnimal.setMapDirection(directions[index]);
             animals[index] = currAnimal;
             index += 1;

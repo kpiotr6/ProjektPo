@@ -12,10 +12,10 @@ public class SimulationEngine {
         for ( Vector2d position: positions) {
             Animal currAnimal;
             if (config.getAnimalBehaviour() == AnimalBehaviour.FULL_PREDISTINATION){
-                currAnimal = new PredistinatedAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
+                currAnimal = new MadAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
             }
             else{
-                currAnimal = new MadAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
+                currAnimal = new PredistinatedAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
             }
             map.initAnimal(currAnimal);
             index += 1;
@@ -32,15 +32,15 @@ public class SimulationEngine {
             System.out.print(this.map);
             this.map.kill();
             this.map.move();
-
             this.map.consume();
             this.map.multiplicate();
             this.map.grow();
-            try{
-                TimeUnit.SECONDS.sleep(4);
-            }catch (Exception e){
-                System.out.println(e);
-            }
+            System.out.println(map.getAnimalCount());
+//            try{
+//                TimeUnit.SECONDS.sleep(4);
+//            }catch (Exception e){
+//                System.out.println(e);
+//            }
 
 
         }

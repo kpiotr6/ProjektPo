@@ -3,8 +3,6 @@ package logic;
 
 import java.util.*;
 
-import java.util.concurrent.TimeUnit;
-
 
 public abstract class AbstractWorldMap{
 
@@ -22,7 +20,7 @@ public abstract class AbstractWorldMap{
     protected Vector2d upperRight;
     private int animalCount;
     private MapVisualizer drawingModule = new MapVisualizer(this);
-    protected Random rand = new Random(2137);
+    protected Random rand = new Random();
     public abstract void applyMovementEffects(Animal animal,Vector2d old,Vector2d current);
 
     public AbstractWorldMap(int height,int width, Starter config){
@@ -142,6 +140,12 @@ public abstract class AbstractWorldMap{
             Animal second = it.next();
             int[] childGenome = new int[config.getGenomeLength()];
             int firstGenes = config.getGenomeLength()*first.getEnergy()/(first.getEnergy()+ second.getEnergy());
+//            if(firstGenes == 0){
+//               firstGenes = 1;
+//            }
+//            if(firstGenes == config.getGenomeLength()){
+//                firstGenes = config.getGenomeLength()-1;
+//            }
             int secondGenes = config.getGenomeLength() - firstGenes;
             Random random = new Random();
 
@@ -152,20 +156,21 @@ public abstract class AbstractWorldMap{
             for (int i = side*(firstGenes+1); i < firstGenes+side*secondGenes; i++) {
                 childGenome[i] = firstGenome[i];
             }
-            for(int i = Math.abs(side-1)*(secondGenes+1);i < secondGenes+Math.abs(side-1)*secondGenes;i++){
+            for(int i = Math.abs(side-1)*(secondGenes+1);i < secondGenes+Math.abs(side-1)*firstGenes;i++){
                 childGenome[i] = secondGenome[i];
             }
             int childEnergy = config.getEnergyToChild();
             Animal child =
             switch (config.getAnimalBehaviour()){
-                case A_LITTLE_BIT_OF_MADNESS -> new MadAnimal(first.getPosition(),childGenome,childEnergy,this);
-                case FULL_PREDISTINATION ->  new PredistinatedAnimal(first.getPosition(),childGenome,childEnergy,this);
+                case A_LITTLE_BIT_OF_MADNESS -> new PredistinatedAnimal(first.getPosition(),childGenome,childEnergy,this);
+                case FULL_PREDISTINATION ->  new MadAnimal(first.getPosition(),childGenome,childEnergy,this);
             };
             int firstEnergyDifference = childEnergy*first.getEnergy()/(first.getEnergy()+ second.getEnergy());
             int secondEnergyDifference = childEnergy-firstEnergyDifference;
             first.giveBirth(firstEnergyDifference);
             second.giveBirth(secondEnergyDifference);
             e.add(child);
+            animalCount++;
         }
     }
     public void grow(){
