@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="476.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.gui.App">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="32.0" prefHeight="420.0" prefWidth="120.0">
+         <children>
+            <Label text="Height" />
+            <Spinner editable="true" />
+            <Label text="Width" />
+            <Spinner editable="true" />
+            <Label text="Start plant number" />
+            <Spinner editable="true" />
+            <Label text="Plant energy" />
+            <Spinner editable="true" />
+            <Label text="New plants" />
+            <Spinner editable="true" />
+            <Label text="Start Animal Number" />
+            <Spinner editable="true" />
+            <Label text="Start Animal Energy" />
+            <Spinner editable="true" />
+            <Label text="Energy to reproduce" />
+            <Spinner editable="true" />
+            <Label text="Energy to child" />
+            <Spinner editable="true" />
+            <Label text="Minimum Mutation" />
+            <Spinner editable="true" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="143.0" layoutY="32.0" prefHeight="250.0" prefWidth="120.0">
+         <children>
+            <Label text="Maximum mutation" />
+            <Spinner editable="true" />
+            <Label text="Genome length" />
+            <Spinner editable="true" />
+            <Label text="Animal behaviour" />
+            <ChoiceBox prefHeight="25.0" prefWidth="135.0" />
+            <Label text="Mutation type" />
+            <ChoiceBox prefHeight="25.0" prefWidth="153.0" />
+            <Label text="Map type" />
+            <ChoiceBox prefHeight="25.0" prefWidth="161.0" />
+            <Label text="Plant type" />
+            <ChoiceBox prefHeight="25.0" prefWidth="169.0" />
+         </children>
+      </VBox>
+      <Button layoutX="143.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Uruchom" />
+      <TextField layoutX="281.0" layoutY="47.0" prefHeight="25.0" prefWidth="181.0" />
+      <Button layoutX="467.0" layoutY="47.0" mnemonicParsing="false" text="Przeglądaj" />
+      <Button layoutX="281.0" layoutY="79.0" mnemonicParsing="false" text="Uruchom" />
+   </children>
+</AnchorPane>

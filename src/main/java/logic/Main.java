@@ -1,8 +1,10 @@
 package logic;
 
+import javafx.application.Application;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
+import logic.gui.App;
 import logic.maps.GlobeMap;
 import logic.simulation.SimulationEngine;
 
@@ -10,6 +12,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args){
+        Application.launch(App.class,args);
         Starter starter = new Starter(
             30,//        height
             30,//        width
