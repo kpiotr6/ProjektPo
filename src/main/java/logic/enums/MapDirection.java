@@ -29,6 +29,11 @@ public enum MapDirection {
             case NW -> new Vector2d(-1,1);
         };
     }
+
+    public int getOrder() {
+        return order;
+    }
+
     public MapDirection turn(int i){
         int newOrder = (this.order + i)%this.directions.length;
         return(directions[newOrder]);

@@ -1,8 +1,7 @@
 package logic.simulation;
 
 import logic.*;
-
-import java.util.concurrent.TimeUnit;
+import logic.enums.AnimalBehaviour;
 
 public class SimulationEngine {
     private AbstractWorldMap map;

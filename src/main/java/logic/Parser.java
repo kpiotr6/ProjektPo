@@ -1,14 +1,13 @@
 package logic;
 
+import logic.enums.AnimalBehaviour;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 public abstract class Parser {
 

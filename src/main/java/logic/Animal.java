@@ -19,6 +19,7 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     protected int lives;
     protected int died;
     protected boolean dead;
+    protected boolean mostPopular;
 
     public  Animal(Vector2d position,int[] genome,int energy,AbstractWorldMap map){
         super(map,position);
@@ -32,6 +33,7 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         this.lives = 0;
         this.died = -1;
         this.dead = false;
+        this.mostPopular = false;
     }
     void mutate(){
         int min = map.config.getMinimumMutation();
@@ -56,7 +58,7 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     }
     @Override
     public String getSource(){
-        String source = "src/main/resources/";
+        String source = "src\\main\\resources\\images\\";
         switch (mapDirection){
             case N -> source+="up.png";
             case NE -> source+="upright.png";
@@ -85,6 +87,10 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         );
     }
     public abstract void move();
+
+    public boolean isMostPopular() {
+        return mostPopular;
+    }
 
     public void setMapDirection(MapDirection mapDirection) {
         this.mapDirection = mapDirection;

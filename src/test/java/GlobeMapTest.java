@@ -1,8 +1,5 @@
 import logic.*;
-import logic.enums.MapDirection;
-import logic.enums.MapType;
-import logic.enums.MutationType;
-import logic.enums.PlantType;
+import logic.enums.*;
 import logic.maps.GlobeMap;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,5 +1,6 @@
 package logic;
 
+import logic.enums.AnimalBehaviour;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
