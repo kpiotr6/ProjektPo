@@ -5,7 +5,7 @@ public class Plant extends AbstractMapElement{
         super(map,positon);
     }
     public String getSource(){
-        return "src/main/resources/grass.png";
+        return "src\\main\\resources\\images\\p.png";
     }
     @Override
     public String toString() {

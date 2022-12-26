@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="696.0" prefWidth="1041.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.gui.main.MapControls">
+   <children>
+      <GridPane fx:id="grid" gridLinesVisible="true" prefHeight="700.0" prefWidth="700.0">
+
+      </GridPane>
+      <Button layoutX="720.0" layoutY="68.0" mnemonicParsing="false" onAction="#pause" text="Wstrzymaj" />
+      <VBox fx:id="allStatistics" layoutX="720.0" layoutY="345.0" prefHeight="174.0" prefWidth="231.0">
+         <children>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Liczba zwierząt: " />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Liczba roślin: " />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Wolne pola: " />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Średnia energia: " />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="130.0" text="Średnia długość życia:" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <Label text="Najpopularniejsze genotypy:" />
+            <Label text="Label" />
+            <Label text="Label" />
+            <Label text="Label" />
+            <Label text="Label" />
+            <Label text="Label" />
+         </children>
+      </VBox>
+      <VBox fx:id="animalStatistics" layoutX="720.0" layoutY="123.0" prefHeight="115.0" prefWidth="231.0">
+         <children>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Genom:" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Aktywny gen" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Energia:" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefWidth="130.0" text="Dzieci" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="130.0" text="Zjedzone rośliny:" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="130.0" text="Żyje:" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="130.0" text="Umarnoł:" />
+                  <Label text="0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button layoutX="800.0" layoutY="68.0" mnemonicParsing="false" onAction="#stop" text="Przerwij" />
+      <Button layoutX="720.0" layoutY="252.0" mnemonicParsing="false" onAction="#startTracking" text="Zacznij śledzić" />
+      <Button layoutX="719.0" layoutY="285.0" mnemonicParsing="false" onAction="#mostPopular" prefHeight="25.0" prefWidth="162.0" text="Najpopularniejszy genotyp" />
+   </children>
+</AnchorPane>

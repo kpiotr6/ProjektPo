@@ -1,5 +1,6 @@
 package logic;
 
+import logic.enums.AnimalBehaviour;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
@@ -21,7 +22,9 @@ public class Starter {
     private MutationType mutationType;
     private int genomeLength;
     private AnimalBehaviour animalBehaviour;
+    public Starter(){
 
+    }
     public Starter(int height, int width, MapType mapType, int startPlantNumber, int plantEnergy, int newPlants, PlantType plantType, int startAnimalNumber, int startAnimalEnergy, int energyToReproduce, int energyToChild, int minimumMutation, int maximumMutation, MutationType mutationType, int genomeLength, AnimalBehaviour animalBehaviour) {
         this.height = height;
         this.width = width;
@@ -103,5 +106,69 @@ public class Starter {
 
     public AnimalBehaviour getAnimalBehaviour() {
         return animalBehaviour;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setMapType(MapType mapType) {
+        this.mapType = mapType;
+    }
+
+    public void setStartPlantNumber(int startPlantNumber) {
+        this.startPlantNumber = startPlantNumber;
+    }
+
+    public void setPlantEnergy(int plantEnergy) {
+        this.plantEnergy = plantEnergy;
+    }
+
+    public void setNewPlants(int newPlants) {
+        this.newPlants = newPlants;
+    }
+
+    public void setPlantType(PlantType plantType) {
+        this.plantType = plantType;
+    }
+
+    public void setStartAnimalNumber(int startAnimalNumber) {
+        this.startAnimalNumber = startAnimalNumber;
+    }
+
+    public void setStartAnimalEnergy(int startAnimalEnergy) {
+        this.startAnimalEnergy = startAnimalEnergy;
+    }
+
+    public void setEnergyToReproduce(int energyToReproduce) {
+        this.energyToReproduce = energyToReproduce;
+    }
+
+    public void setEnergyToChild(int energyToChild) {
+        this.energyToChild = energyToChild;
+    }
+
+    public void setMinimumMutation(int minimumMutation) {
+        this.minimumMutation = minimumMutation;
+    }
+
+    public void setMaximumMutation(int maximumMutation) {
+        this.maximumMutation = maximumMutation;
+    }
+
+    public void setMutationType(MutationType mutationType) {
+        this.mutationType = mutationType;
+    }
+
+    public void setGenomeLength(int genomeLength) {
+        this.genomeLength = genomeLength;
+    }
+
+    public void setAnimalBehaviour(AnimalBehaviour animalBehaviour) {
+        this.animalBehaviour = animalBehaviour;
     }
 }
