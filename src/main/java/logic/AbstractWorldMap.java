@@ -177,6 +177,14 @@ public abstract class AbstractWorldMap{
         plantator.plant();
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     protected void addToAnimals(Animal animal, Vector2d position){
         this.animals.computeIfAbsent(animal.getPosition(), k -> new TreeSet<Animal>());
         this.animals.get(position).add(animal);

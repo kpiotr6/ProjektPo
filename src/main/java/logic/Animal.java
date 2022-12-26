@@ -60,14 +60,14 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     public String getSource(){
         String source = "src\\main\\resources\\images\\";
         switch (mapDirection){
-            case N -> source+="up.png";
-            case NE -> source+="upright.png";
-            case E -> source+="right.png";
-            case SE -> source+="downright.png";
-            case S -> source+="down.png";
-            case SW -> source+="downleft.png";
-            case W -> source+="left.png";
-            case NW -> source+="upleft.png";
+            case N -> source+="n.png";
+            case NE -> source+="ne.png";
+            case E -> source+="e.png";
+            case SE -> source+="se.png";
+            case S -> source+="s.png";
+            case SW -> source+="sw.png";
+            case W -> source+="w.png";
+            case NW -> source+="nw.png";
         }
         return source;
     }

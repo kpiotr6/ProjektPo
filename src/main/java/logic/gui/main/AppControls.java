@@ -8,31 +8,25 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import logic.Plant;
+import logic.Parser;
 import logic.Starter;
 import logic.enums.AnimalBehaviour;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.util.Map;
+
 
 public class AppControls {
     private int maxSim = 5;
     private int currSim = 0;
-    private File configFile;
     private App app;
     @FXML
     private ChoiceBox<AnimalBehaviour> animal;
@@ -88,8 +82,10 @@ public class AppControls {
     @FXML
     private Spinner<Integer> width;
     Window main;
+    FileChooser chooser = new FileChooser();
+    File choosen;
     @FXML
-    public void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void initialize() {
         animal.getItems().add(AnimalBehaviour.FULL_PREDISTINATION);
         animal.getItems().add(AnimalBehaviour.A_LITTLE_BIT_OF_MADNESS);
         map.getItems().add(MapType.GLOBE);
@@ -123,25 +119,7 @@ public class AppControls {
         startAnimalEnergy.setValueFactory(factory);
         factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300);
         startAnimalNumber.setValueFactory(factory);
-//        main = app.mainStage;
 
-//        factory.setValue(15);
-//        Field[] fields = getClass().getDeclaredFields();
-//        for (Field f: fields) {
-//            if(f.getType()==Spinner.class){
-//                f.setAccessible(true);
-//                SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2,300);
-//                factory.setValue(15);
-//                Method m = Spinner.class.getDeclaredMethod("setValueFactory", SpinnerValueFactory.class);
-//                try{
-//                    m.invoke(f.get(this),factory);
-//                }
-//                catch (Exception e){
-//                    System.out.println(e);
-//                }
-//
-//            }
-//        }
 
     }
 
@@ -153,24 +131,49 @@ public class AppControls {
         if(maxSim==currSim || animal.getValue()==null || map.getValue()==null || mutation.getValue()==null || plant.getValue() == null){
             return;
         }
-        currSim+=1;
-        System.out.println("lol");
+
+        Starter s = new Starter(
+                height.getValue(),
+                width.getValue(),
+                map.getValue(),
+                plantNumber.getValue(),
+                plantEnergy.getValue(),
+                newPlants.getValue(),
+                plant.getValue(),
+                startAnimalNumber.getValue(),
+                startAnimalEnergy.getValue(),
+                energyToReproduce.getValue(),
+                energyToChild.getValue(),
+                minimumMutation.getValue(),
+                maximumMutation.getValue(),
+                mutation.getValue(),
+                genomeLength.getValue(),
+                animal.getValue()
+        );
+        newWindow(s);
+    }
+    public void fileStart(ActionEvent actionEvent) throws IOException, IllegalAccessException {
+        if(maxSim==currSim || choosen==null){
+            return;
+        }
+        newWindow(Parser.fromFile(choosen));
+
+    }
+    public void fileChoose(ActionEvent actionEvent){
+        main = app.mainStage;
+        choosen = chooser.showOpenDialog(main);
+        source.setText(choosen.getPath());
+    }
+    private void newWindow(Starter s) throws IOException {
+//        currSim+=1;
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/logic/gui/main/map.fxml").toURI().toURL());
         AnchorPane root = loader.load();
-
         Scene scene = new Scene(root);
+        ((MapControls)loader.getController()).setStage(stage);
+        ((MapControls)loader.getController()).run(s);
         stage.setScene(scene);
         stage.show();
-
-    }
-    public void fileStart(ActionEvent actionEvent){
-
-    }
-    public void fileChoose(ActionEvent actionEvent){
-        FileChooser chooser = new FileChooser();
-        main = app.mainStage;
-        chooser.showOpenDialog(main);
     }
 }

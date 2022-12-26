@@ -18,7 +18,7 @@ public class App extends Application {
     FXMLLoader loader;
     Stage mainStage;
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setScene(scene);
         primaryStage.show();
         mainStage = primaryStage;
@@ -26,16 +26,16 @@ public class App extends Application {
 
     @Override
     public void init() throws Exception {
-        super.init();
-        loader = new FXMLLoader(new File("src/main/java/logic/gui/main/main.fxml").toURI().toURL());
-        root = loader.load();
-        scene = new Scene(root);
-        AppControls appControls = loader.getController();
-        appControls.setApp(this);
+
+            super.init();
+            loader = new FXMLLoader(new File("src/main/java/logic/gui/main/main.fxml").toURI().toURL());
+            root = loader.load();
+            scene = new Scene(root);
+            AppControls appControls = loader.getController();
+            appControls.setApp(this);
 //        ObservableList<Node> list= root.getChildren();
 //        list.
-    }
-    public void addNewMapWindow(){
 
     }
+
 }
