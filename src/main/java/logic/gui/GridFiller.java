@@ -1,11 +1,11 @@
 package logic.gui;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import logic.AbstractMapElement;
-import logic.AbstractWorldMap;
-import logic.Starter;
-import logic.Vector2d;
+import logic.*;
+import logic.simulation.SimulationEngine;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -17,11 +17,13 @@ public class GridFiller implements Runnable{
     private GridPane grid;
     private Starter config;
     private List<MapElementRepresentation> elementRepresentation;
-    public GridFiller(AbstractWorldMap map, GridPane grid, Starter starter){
+    private SimulationEngine engine;
+    public GridFiller(AbstractWorldMap map, GridPane grid, Starter starter, SimulationEngine engine){
         this.map = map;
         this.grid = grid;
         this.config = starter;
         this.elementRepresentation = new LinkedList<>();
+        this.engine = engine;
     }
     public void fillGrid(){
         grid.getChildren().clear();
@@ -42,6 +44,16 @@ public class GridFiller implements Runnable{
                         iterator.next();
                     }
                     ImageView img = e.getRepresentation((AbstractMapElement)o);
+                    if(o instanceof Animal){
+                        img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                engine.startTracking((Animal)o);
+                                event.consume();
+                            }
+                        });
+                    }
+
                     img.setFitHeight(grid.getRowConstraints().get(0).getPrefHeight());
                     img.setFitWidth(grid.getRowConstraints().get(0).getPrefHeight());
                     grid.add(img,x,config.getHeight()-y);
