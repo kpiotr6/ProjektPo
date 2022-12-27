@@ -2,8 +2,10 @@ package logic.simulation;
 
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import logic.*;
 import logic.enums.AnimalBehaviour;
+import logic.gui.AllStatisticFiller;
 import logic.gui.GridFiller;
 import logic.maps.GlobeMap;
 import logic.maps.HellMap;
@@ -14,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 public class SimulationEngine implements Runnable{
     private AbstractWorldMap map;
     private GridFiller gridFiller;
+    private AllStatisticFiller statisticFiller;
+    public volatile boolean paused = false;
+    private final Object pauseLock = new Object();
 
     public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
         int index = 0;
@@ -33,7 +38,7 @@ public class SimulationEngine implements Runnable{
     public AbstractWorldMap getMap(){
         return map;
     }
-    public SimulationEngine(Starter starter, GridPane grid){
+    public SimulationEngine(Starter starter, GridPane grid, VBox allStatistics){
         this.map = switch (starter.getMapType()){
             case GLOBE -> new GlobeMap(starter.getHeight(),starter.getWidth(),starter);
             case HELL_GATE -> new HellMap(starter.getHeight(),starter.getWidth(),starter);
@@ -43,6 +48,7 @@ public class SimulationEngine implements Runnable{
             this.map.initAnimal(a);
         }
         gridFiller = new GridFiller(this.map,grid,starter);
+        this.statisticFiller = new AllStatisticFiller(map, allStatistics, starter);
     }
     private Animal animalGenerator(Starter starter,AbstractWorldMap tmpMap){
         Random random = new Random();
@@ -70,14 +76,33 @@ public class SimulationEngine implements Runnable{
             this.map.grow();
 //            this.gridFiller.fillGrid();
             Platform.runLater(this.gridFiller);
-            System.out.println(map.getAnimalCount());
+            Platform.runLater(this.statisticFiller);
+            //System.out.println(map.getAnimalCount());
             try{
                 TimeUnit.MILLISECONDS.sleep(200);
             }catch (Exception e){
                 System.out.println(e);
             }
+            synchronized (pauseLock) {
+                if (paused) {
+                    try {
+                        pauseLock.wait();
+                    } catch (InterruptedException ex) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
+    public void pause() {
+        paused = true;
+    }
 
+    public void resume() {
+        synchronized (pauseLock) {
+            paused = false;
+            pauseLock.notifyAll();
         }
     }
 }

@@ -2,10 +2,9 @@ package logic.gui.main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import logic.Starter;
 import logic.simulation.SimulationEngine;
@@ -18,6 +17,9 @@ public class MapControls {
     private VBox animalStatistics;
     @FXML
     private VBox allStatistics;
+
+    private SimulationEngine simulationEngine;
+
     public void run(Starter s){
         SimulationEngine simulationEngine = null;
         double size = Math.min(700/s.getWidth(),700/s.getHeight());
@@ -29,7 +31,8 @@ public class MapControls {
 //            System.out.println(grid.getRowConstraints().get(0));
         }
         try{
-            simulationEngine = new SimulationEngine(s,grid);
+            simulationEngine = new SimulationEngine(s,grid, allStatistics);
+            this.simulationEngine = simulationEngine;
             Thread thread = new Thread(simulationEngine);
             thread.start();
 
@@ -45,14 +48,17 @@ public class MapControls {
         this.map = s;
     }
     public void pause(ActionEvent e){
-        System.out.println(e);
-        System.out.println(grid.getScene());
+        if(this.simulationEngine.paused){
+            simulationEngine.resume();
+        }else {
+            simulationEngine.pause();
+        }
     }
     public void stop(ActionEvent e){
 
     }
     public void startTracking(ActionEvent e){
-
+        if(!this.simulationEngine.paused) return;
     }
     public void mostPopular(ActionEvent e){
 
