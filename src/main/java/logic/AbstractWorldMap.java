@@ -19,6 +19,8 @@ public abstract class AbstractWorldMap{
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
     private int animalCount;
+    private int totalDeathAnimalLength;
+    private int deathAnimalCount;//With dead ones
     private MapVisualizer drawingModule = new MapVisualizer(this);
     protected Random rand = new Random();
     public abstract void applyMovementEffects(Animal animal,Vector2d old,Vector2d current);
@@ -37,7 +39,8 @@ public abstract class AbstractWorldMap{
          }
          this.lowerLeft = new Vector2d(0,0);
          this.upperRight = new Vector2d(width-1, height-1);
-
+        this.deathAnimalCount = 0;
+        this.totalDeathAnimalLength = 0;
     }
     public int getAverageLifespan(){
         int sum=0;
@@ -64,6 +67,62 @@ public abstract class AbstractWorldMap{
     }
     public int getAnimalCount() {
         return animalCount;
+    }
+    public int getPlantCount(){return plantator.getPlantNum();}
+    public int getEmptyFileds(){
+        int count = 0;
+        for(int x=0;x<config.getWidth();x++) {
+            for (int y = 0; y < config.getHeight(); y++) {
+                Object o = this.objectAt(new Vector2d(x, y));
+                if(o == null) count += 1;
+            }
+        }
+        return count;
+    }
+
+    public float getEnergyAverage(){
+        int energySum = 0;
+        for(var e:animals.values()){
+            Iterator<Animal> i = e.iterator();
+            while (i.hasNext()){
+                Animal el = i.next();
+                energySum += el.getEnergy();
+            }
+        }
+        if(this.getAnimalCount() == 0) return 0;
+        return energySum/this.getAnimalCount();
+    }
+
+    public int getLifeLengthAverage(){
+        if(this.deathAnimalCount == 0) return 0;
+        return totalDeathAnimalLength/deathAnimalCount;
+    }
+
+    public String[] getMostPopularGenotypes(){
+        HashMap<String, Integer> CountHashMap = new HashMap<>();
+        String[] ans = new String[]{"","","","",""};
+
+        for(var e:animals.values()){
+            Iterator<Animal> i = e.iterator();
+            while (i.hasNext()){
+                Animal el = i.next();
+                String genotype = Arrays.toString(el.getGenome());
+                CountHashMap.put(genotype, CountHashMap.getOrDefault(genotype, 0) + 1);
+            }
+        }
+
+        List<Integer> allCounts = new ArrayList<Integer>(CountHashMap.values());
+        Collections.sort(allCounts, Collections.reverseOrder());
+        List<Integer> top5 = allCounts.subList(0, allCounts.size() < 5 ? allCounts.size() : 5);
+
+        for (var e:CountHashMap.entrySet()) {
+            if(top5.contains(e.getValue())){
+                int id =top5.indexOf(e.getValue());
+                ans[id] = e.getKey();
+                top5.set(id, -1);
+            }
+        }
+        return ans;
     }
 
     public boolean canMoveTo(Vector2d position) {
@@ -118,8 +177,12 @@ public abstract class AbstractWorldMap{
                 Animal el = i.next();
                 if(el.isDead()){
                     i.remove();
+                    totalDeathAnimalLength += el.lives;
+                    deathAnimalCount++;
                     deadAnimals.add(el);
                     this.animalCount -=1;
+                }else{
+                    el.lives++;
                 }
             }
         }
@@ -224,7 +287,7 @@ public abstract class AbstractWorldMap{
 
     public void initAnimal(Animal animal){
         this.addToAnimals(animal, animal.getPosition());
-        this.animalCount += 1;
+        this.animalCount++;
     }
 
     @Override

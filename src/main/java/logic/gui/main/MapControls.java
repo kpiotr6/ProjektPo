@@ -2,11 +2,16 @@ package logic.gui.main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+
 import javafx.stage.Stage;
 import logic.Starter;
 import logic.simulation.SimulationEngine;
@@ -24,22 +29,9 @@ public class MapControls {
     private VBox animalStatistics;
     @FXML
     private VBox allStatistics;
-    @FXML
-    private Label s1;
-    @FXML
-    private Label s2;
-    @FXML
-    private Label s3;
-    @FXML
-    private Label s4;
-    @FXML
-    private Label s5;
-    @FXML
-    private Label s6;
-    @FXML
-    private Label s7;
-    @FXML
-    private Label s8;
+
+
+    private SimulationEngine simulationEngine;
 
 
     public void run(Starter s){
@@ -62,8 +54,11 @@ public class MapControls {
         list.add(s7);
         list.add(s8);
         try{
-            simulationEngine = new SimulationEngine(s,grid,list);
-            thread = new Thread(simulationEngine);
+
+            simulationEngine = new SimulationEngine(s,grid, allStatistics, animalStatistics);
+            this.simulationEngine = simulationEngine;
+            Thread thread = new Thread(simulationEngine);
+
             thread.start();
 
         }
@@ -78,14 +73,18 @@ public class MapControls {
         this.map = s;
     }
     public void pause(ActionEvent e){
-        System.out.println(e);
-        System.out.println(grid.getScene());
+        if(this.simulationEngine.paused){
+            simulationEngine.resume();
+        }else {
+            simulationEngine.pause();
+        }
     }
     public void stop(ActionEvent e){
         System.out.println("dasdasd");
         thread.stop();
     }
     public void startTracking(ActionEvent e){
+        if(!this.simulationEngine.paused) return;
 
     }
     public void mostPopular(ActionEvent e){

@@ -127,6 +127,7 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     }
     public void eat(int energy){
         this.energy += energy;
+        this.eaten++;
     }
 
     public int getEaten() {

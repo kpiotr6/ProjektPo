@@ -6,6 +6,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import logic.*;
 import logic.enums.AnimalBehaviour;
+import logic.gui.AllStatisticFiller;
+import logic.gui.AnimalStatisticFiller;
 import logic.gui.GridFiller;
 import logic.maps.GlobeMap;
 import logic.maps.HellMap;
@@ -17,26 +19,35 @@ import java.util.concurrent.TimeUnit;
 public class SimulationEngine implements Runnable{
     private AbstractWorldMap map;
     private GridFiller gridFiller;
+    private AllStatisticFiller statisticFiller;
+    private AnimalStatisticFiller animalStatisticFiller;
+    private VBox animalStatistic;
+    private Starter config;
+    public volatile boolean paused = false;
+    public boolean tracking = false;
+    private final Object pauseLock = new Object();
 
-    public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
-        int index = 0;
-        for ( Vector2d position: positions) {
-            Animal currAnimal;
-            if (config.getAnimalBehaviour() == AnimalBehaviour.FULL_PREDISTINATION){
-                currAnimal = new MadAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
-            }
-            else{
-                currAnimal = new PredistinatedAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
-            }
-            map.initAnimal(currAnimal);
-            index += 1;
-        }
-        this.map = map;
-    }
+//    public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
+//        int index = 0;
+//        for ( Vector2d position: positions) {
+//            Animal currAnimal;
+//            if (config.getAnimalBehaviour() == AnimalBehaviour.FULL_PREDISTINATION){
+//                currAnimal = new MadAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
+//            }
+//            else{
+//                currAnimal = new PredistinatedAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
+//            }
+//            map.initAnimal(currAnimal);
+//            index += 1;
+//        }
+//        this.map = map;
+//    }
     public AbstractWorldMap getMap(){
         return map;
     }
-    public SimulationEngine(Starter starter, GridPane grid, List<Label> list){
+
+    public SimulationEngine(Starter starter, GridPane grid, VBox allStatistics, VBox animalStatistic){
+
         this.map = switch (starter.getMapType()){
             case GLOBE -> new GlobeMap(starter.getHeight(),starter.getWidth(),starter);
             case HELL_GATE -> new HellMap(starter.getHeight(),starter.getWidth(),starter);
@@ -45,7 +56,11 @@ public class SimulationEngine implements Runnable{
             Animal a = animalGenerator(starter,this.map);
             this.map.initAnimal(a);
         }
-        gridFiller = new GridFiller(this.map,grid,list,starter);
+
+        gridFiller = new GridFiller(this.map,grid,starter, this);
+        this.statisticFiller = new AllStatisticFiller(map, allStatistics, starter);
+        this.animalStatistic = animalStatistic;
+        this.config = starter;
     }
     private Animal animalGenerator(Starter starter,AbstractWorldMap tmpMap){
         Random random = new Random();
@@ -58,6 +73,12 @@ public class SimulationEngine implements Runnable{
             case FULL_PREDISTINATION -> new PredistinatedAnimal(position,genome,starter.getStartAnimalEnergy(),tmpMap);
             case A_LITTLE_BIT_OF_MADNESS -> new MadAnimal(position,genome,starter.getStartAnimalEnergy(),tmpMap);
         };
+    }
+
+    public void startTracking(Animal animal){
+        if(!paused) return;
+        animalStatisticFiller = new AnimalStatisticFiller(map, this.animalStatistic, this.config, animal);
+        tracking = true;
     }
     public void run(){
 
@@ -73,14 +94,36 @@ public class SimulationEngine implements Runnable{
             this.map.grow();
 //            this.gridFiller.fillGrid();
             Platform.runLater(this.gridFiller);
-            System.out.println(map.getAnimalCount());
+            Platform.runLater(this.statisticFiller);
+            if(this.tracking){
+                Platform.runLater(this.animalStatisticFiller);
+            }
+            //System.out.println(map.getAnimalCount());
             try{
                 TimeUnit.MILLISECONDS.sleep(100);
             }catch (Exception e){
                 System.out.println(e);
             }
+            synchronized (pauseLock) {
+                if (paused) {
+                    try {
+                        pauseLock.wait();
+                    } catch (InterruptedException ex) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
+    public void pause() {
+        paused = true;
+    }
 
+    public void resume() {
+        synchronized (pauseLock) {
+            paused = false;
+            pauseLock.notifyAll();
         }
     }
 }

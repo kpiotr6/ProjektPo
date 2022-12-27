@@ -1,15 +1,25 @@
 package logic.gui;
 
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+
+import javafx.event.EventHandler;
+
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logic.AbstractMapElement;
 import logic.AbstractWorldMap;
 import logic.Starter;
 import logic.Vector2d;
+
+import logic.*;
+import logic.simulation.SimulationEngine;
+
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -21,13 +31,17 @@ public class GridFiller implements Runnable{
     private GridPane grid;
     private Starter config;
     private List<MapElementRepresentation> elementRepresentation;
-    private List<Label> allStats;
-    public GridFiller(AbstractWorldMap map, GridPane grid, List<Label> allstats, Starter starter){
+
+    private SimulationEngine engine;
+    public GridFiller(AbstractWorldMap map, GridPane grid, Starter starter, SimulationEngine engine){
+
         this.map = map;
         this.grid = grid;
         this.config = starter;
         this.elementRepresentation = new LinkedList<>();
-        this.allStats = allstats;
+
+        this.engine = engine;
+
     }
     public void fillGrid(){
         grid.getChildren().clear();
@@ -48,6 +62,16 @@ public class GridFiller implements Runnable{
                         iterator.next();
                     }
                     ImageView img = e.getRepresentation((AbstractMapElement)o);
+                    if(o instanceof Animal){
+                        img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                engine.startTracking((Animal)o);
+                                event.consume();
+                            }
+                        });
+                    }
+
                     img.setFitHeight(grid.getRowConstraints().get(0).getPrefHeight());
                     img.setFitWidth(grid.getRowConstraints().get(0).getPrefHeight());
                     grid.add(img,x,config.getHeight()-y);
