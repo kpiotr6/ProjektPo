@@ -45,6 +45,7 @@ public class MapControls {
         this.map = s;
     }
     public void pause(ActionEvent e){
+        System.out.println(e);
         System.out.println(grid.getScene());
     }
     public void stop(ActionEvent e){
