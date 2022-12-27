@@ -11,7 +11,12 @@ public class EquatorPlantator extends Plantator{
         super(map);
         this.numOfZones = Math.max(1, (int)Math.floor(this.specialFields / this.map.width));
         this.equatorStart = new Vector2d(0, ((int)(this.map.height / 2))-(int)(numOfZones/2));
-        this.equatorEnd = new Vector2d(this.map.width-1,((int)(this.map.height / 2))+(int)(numOfZones/2)-1);
+        if(this.map.height % 2 == 0){
+            this.equatorEnd = new Vector2d(this.map.width-1,((int)(this.map.height / 2))+(int)(numOfZones/2)-1);
+        }else{
+            this.equatorEnd = new Vector2d(this.map.width-1,((int)(this.map.height / 2))+(int)(numOfZones/2));
+        }
+
         if(this.equatorEnd.y < 0 ) this.equatorEnd = new Vector2d(this.equatorEnd.x, 0);
         this.totalWeights = this.map.width * this.map.height + (this.map.width) * numOfZones * 4;
         this.specialWeights = (this.map.width) * numOfZones * 5;
@@ -25,17 +30,16 @@ public class EquatorPlantator extends Plantator{
             boolean temp =  this.isSpecialPlant();
             if(this.normalPlantsNum == this.map.width * this.map.height - (this.map.width) * numOfZones){
                 temp = true;
-
             }
             if(temp && this.specialPlantsNum < (this.map.width) * numOfZones){
                 int potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                 System.out.println("lol:"+equatorStart.y+" "+equatorEnd.y);
                 int potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
 
-                int cycle = 0;
                 while(this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null){
                     potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                     potentialNewGrassFieldY = this.map.generateNumber(this.equatorStart.y, this.equatorEnd.y);
+                    System.out.println(normalPlantsNum + specialPlantsNum);
                 }
                 this.map.addPlant(new Plant(this.map, new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)), new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY));
                 this.specialPlantsNum += 1;
@@ -46,6 +50,7 @@ public class EquatorPlantator extends Plantator{
                 while (this.map.plantAt(new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)) != null || (potentialNewGrassFieldY >= this.equatorStart.y && potentialNewGrassFieldY <= this.equatorEnd.y)){
                     potentialNewGrassFieldX = this.map.generateNumber(0, map.width-1);
                     potentialNewGrassFieldY = this.map.generateNumber(0, map.height-1);
+                    System.out.println(normalPlantsNum + specialPlantsNum);
                 }
                 this.map.addPlant(new Plant(this.map, new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY)), new Vector2d(potentialNewGrassFieldX, potentialNewGrassFieldY));
                 this.normalPlantsNum += 1;
