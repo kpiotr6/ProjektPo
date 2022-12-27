@@ -10,8 +10,9 @@ public class EquatorPlantator extends Plantator{
     public EquatorPlantator(AbstractWorldMap map) {
         super(map);
         this.numOfZones = Math.max(1, (int)Math.floor(this.specialFields / this.map.width));
+        System.out.println(numOfZones);
         this.equatorStart = new Vector2d(0, ((int)(this.map.height / 2))-(int)(numOfZones/2));
-        if(this.map.height % 2 == 0){
+        if(this.numOfZones % 2 == 0){
             this.equatorEnd = new Vector2d(this.map.width-1,((int)(this.map.height / 2))+(int)(numOfZones/2)-1);
         }else{
             this.equatorEnd = new Vector2d(this.map.width-1,((int)(this.map.height / 2))+(int)(numOfZones/2));
