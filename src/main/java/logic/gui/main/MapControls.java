@@ -31,7 +31,7 @@ public class MapControls {
 //            System.out.println(grid.getRowConstraints().get(0));
         }
         try{
-            simulationEngine = new SimulationEngine(s,grid, allStatistics);
+            simulationEngine = new SimulationEngine(s,grid, allStatistics, animalStatistics);
             this.simulationEngine = simulationEngine;
             Thread thread = new Thread(simulationEngine);
             thread.start();
@@ -59,6 +59,7 @@ public class MapControls {
     }
     public void startTracking(ActionEvent e){
         if(!this.simulationEngine.paused) return;
+
     }
     public void mostPopular(ActionEvent e){
 
