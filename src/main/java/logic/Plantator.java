@@ -10,7 +10,9 @@ public abstract class Plantator {
     protected AbstractWorldMap map;
     Random rand = new Random();
     int specialFields;
-
+    public int getPlantNumber(){
+        return normalPlantsNum+specialPlantsNum;
+    }
     public Plantator(AbstractWorldMap map){
         this.map = map;
         this.specialFields = (int)Math.ceil(this.map.height*this.map.width*0.2);

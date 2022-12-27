@@ -18,39 +18,37 @@
             <HBox prefHeight="11.0" prefWidth="100.0">
                <children>
                   <Label prefWidth="130.0" text="Liczba zwierząt: " />
-                  <Label text="0" />
+                  <Label fx:id="s1" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="11.0" prefWidth="100.0">
                <children>
                   <Label prefWidth="130.0" text="Liczba roślin: " />
-                  <Label text="0" />
+                  <Label fx:id="s2" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="11.0" prefWidth="100.0">
                <children>
                   <Label prefWidth="130.0" text="Wolne pola: " />
-                  <Label text="0" />
+                  <Label fx:id="s3" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="11.0" prefWidth="100.0">
                <children>
                   <Label prefWidth="130.0" text="Średnia energia: " />
-                  <Label text="0" />
+                  <Label fx:id="s4" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="11.0" prefWidth="100.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="130.0" text="Średnia długość życia:" />
-                  <Label text="0" />
+                  <Label fx:id="s5" text="0" />
                </children>
             </HBox>
             <Label text="Najpopularniejsze genotypy:" />
-            <Label text="Label" />
-            <Label text="Label" />
-            <Label text="Label" />
-            <Label text="Label" />
-            <Label text="Label" />
+            <Label fx:id="s6" text="Label" />
+            <Label fx:id="s7" text="Label" />
+            <Label fx:id="s8" text="Label" />
          </children>
       </VBox>
       <VBox fx:id="animalStatistics" layoutX="720.0" layoutY="123.0" prefHeight="115.0" prefWidth="231.0">

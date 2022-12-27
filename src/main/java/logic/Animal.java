@@ -34,8 +34,9 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         this.died = -1;
         this.dead = false;
         this.mostPopular = false;
+        mutate();
     }
-    void mutate(){
+    public void mutate(){
         int min = map.config.getMinimumMutation();
         int max = map.config.getMaximumMutation();
         Random random = new Random();

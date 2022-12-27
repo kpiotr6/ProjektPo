@@ -42,7 +42,29 @@ public abstract class AbstractWorldMap{
         this.deathAnimalCount = 0;
         this.totalDeathAnimalLength = 0;
     }
-
+    public int getAverageLifespan(){
+        int sum=0;
+        for (Animal a:deadAnimals) {
+            sum+=a.getLives();
+            System.out.println(a.getLives());
+        }
+        if(deadAnimals.size()==0){
+            return 0;
+        }
+        return sum/deadAnimals.size();
+    }
+    public int getAverageEnergy(){
+        int sum=0;
+        for (Set<Animal> animalSet: animals.values()) {
+            for (Animal a: animalSet) {
+                sum += a.getEnergy();
+            }
+        }
+        return sum/animalCount;
+    }
+    public int getPlantNumber(){
+        return  plantator.getPlantNumber();
+    }
     public int getAnimalCount() {
         return animalCount;
     }
@@ -113,6 +135,7 @@ public abstract class AbstractWorldMap{
 
     public Animal animalAt(Vector2d position){
         if(animals.get(position) == null) return null;
+        if(animals.get(position).size()==0) return null;
         return animals.get(position).first();
     }
 

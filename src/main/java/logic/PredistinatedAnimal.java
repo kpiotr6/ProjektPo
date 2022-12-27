@@ -5,7 +5,7 @@ public class PredistinatedAnimal extends Animal{
         super(position, genome, energy, map);
     }
     public void move(){
-
+        lives++;
         this.mapDirection =  mapDirection.turn(genome[activated]);
         activated = (activated+1)%genome.length;
 
