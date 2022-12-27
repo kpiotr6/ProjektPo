@@ -7,6 +7,7 @@ public class MadAnimal extends Animal {
         super(position, genome, energy, map);
     }
     public void move(){
+        lives++;
         this.mapDirection = this.mapDirection.turn(genome[activated]);
         Random random = new Random();
         int r = random.nextInt(10);

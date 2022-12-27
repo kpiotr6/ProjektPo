@@ -171,8 +171,10 @@ public class AppControls {
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/logic/gui/main/map.fxml").toURI().toURL());
         AnchorPane root = loader.load();
         Scene scene = new Scene(root);
-        ((MapControls)loader.getController()).setStage(stage);
-        ((MapControls)loader.getController()).run(s);
+        MapControls controls = loader.getController();
+        stage.setOnCloseRequest(event -> {controls.stop(null);});
+        controls.setStage(stage);
+        controls.run(s);
         stage.setScene(scene);
         stage.show();
     }

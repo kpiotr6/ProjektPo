@@ -1,13 +1,16 @@
 package logic.simulation;
 
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import logic.*;
 import logic.enums.AnimalBehaviour;
 import logic.gui.GridFiller;
 import logic.maps.GlobeMap;
 import logic.maps.HellMap;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +36,7 @@ public class SimulationEngine implements Runnable{
     public AbstractWorldMap getMap(){
         return map;
     }
-    public SimulationEngine(Starter starter, GridPane grid){
+    public SimulationEngine(Starter starter, GridPane grid, List<Label> list){
         this.map = switch (starter.getMapType()){
             case GLOBE -> new GlobeMap(starter.getHeight(),starter.getWidth(),starter);
             case HELL_GATE -> new HellMap(starter.getHeight(),starter.getWidth(),starter);
@@ -42,7 +45,7 @@ public class SimulationEngine implements Runnable{
             Animal a = animalGenerator(starter,this.map);
             this.map.initAnimal(a);
         }
-        gridFiller = new GridFiller(this.map,grid,starter);
+        gridFiller = new GridFiller(this.map,grid,list,starter);
     }
     private Animal animalGenerator(Starter starter,AbstractWorldMap tmpMap){
         Random random = new Random();
@@ -72,7 +75,7 @@ public class SimulationEngine implements Runnable{
             Platform.runLater(this.gridFiller);
             System.out.println(map.getAnimalCount());
             try{
-                TimeUnit.MILLISECONDS.sleep(200);
+                TimeUnit.MILLISECONDS.sleep(100);
             }catch (Exception e){
                 System.out.println(e);
             }
