@@ -74,6 +74,7 @@ public class MapControls {
     public void stop(ActionEvent e){
 //        System.out.println("dasdasd");
         simulationEngine.stop();
+        map.close();
     }
     public void startTracking(ActionEvent e){
         if(!this.simulationEngine.paused) return;
