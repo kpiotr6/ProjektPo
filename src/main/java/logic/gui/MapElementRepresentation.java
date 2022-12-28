@@ -1,8 +1,10 @@
 package logic.gui;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import logic.*;
+import logic.simulation.SimulationEngine;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,8 +13,10 @@ public class MapElementRepresentation {
     public Starter config;
     public ImageView plant;
     public ImageView[] animals = new ImageView[8];
-    public MapElementRepresentation(Starter config){
+    public SimulationEngine engine;
+    public MapElementRepresentation(Starter config, SimulationEngine engine){
         this.config = config;
+        this.engine = engine;
     }
     public ImageView getRepresentation(AbstractMapElement element){
         if(element instanceof Plant){
@@ -36,18 +40,20 @@ public class MapElementRepresentation {
                 }
             }
             int startEnergy = config.getStartAnimalEnergy();
-            if(animal.isMostPopular()){
-
+            ColorAdjust adjust = new ColorAdjust();
+            if(engine.trackedAnimal==element){
+                adjust.setHue(1);
             }
             else if(animal.getEnergy()<=startEnergy/2){
-
+                adjust.setHue(-0.5);
             }
             else if (animal.getEnergy()<=startEnergy) {
-
+                adjust.setHue(-0.1);
             }
             else{
-
+                adjust.setHue(0.5);
             }
+            animals[i].setEffect(adjust);
             return animals[i];
 
         }

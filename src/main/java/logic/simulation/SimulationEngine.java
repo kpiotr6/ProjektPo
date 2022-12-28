@@ -12,6 +12,7 @@ import logic.gui.GridFiller;
 import logic.maps.GlobeMap;
 import logic.maps.HellMap;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -23,11 +24,15 @@ public class SimulationEngine implements Runnable{
     private AnimalStatisticFiller animalStatisticFiller;
     private VBox animalStatistic;
     private Starter config;
+    private boolean stopped = false;
     public volatile boolean paused = false;
     public boolean tracking = false;
+    public Animal trackedAnimal = null;
+    public CSVWritter writter;
     private final Object pauseLock = new Object();
 
-//    public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
+
+    //    public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
 //        int index = 0;
 //        for ( Vector2d position: positions) {
 //            Animal currAnimal;
@@ -46,12 +51,13 @@ public class SimulationEngine implements Runnable{
         return map;
     }
 
-    public SimulationEngine(Starter starter, GridPane grid, VBox allStatistics, VBox animalStatistic){
+    public SimulationEngine(Starter starter, GridPane grid, VBox allStatistics, VBox animalStatistic,CSVWritter writter){
 
         this.map = switch (starter.getMapType()){
             case GLOBE -> new GlobeMap(starter.getHeight(),starter.getWidth(),starter);
             case HELL_GATE -> new HellMap(starter.getHeight(),starter.getWidth(),starter);
         };
+
         for(int i=0;i<starter.getStartAnimalNumber();i++){
             Animal a = animalGenerator(starter,this.map);
             this.map.initAnimal(a);
@@ -61,6 +67,7 @@ public class SimulationEngine implements Runnable{
         this.statisticFiller = new AllStatisticFiller(map, allStatistics, starter);
         this.animalStatistic = animalStatistic;
         this.config = starter;
+        this.writter = writter;
     }
     private Animal animalGenerator(Starter starter,AbstractWorldMap tmpMap){
         Random random = new Random();
@@ -77,13 +84,26 @@ public class SimulationEngine implements Runnable{
 
     public void startTracking(Animal animal){
         if(!paused) return;
+        trackedAnimal = animal;
         animalStatisticFiller = new AnimalStatisticFiller(map, this.animalStatistic, this.config, animal);
         tracking = true;
+    }
+    private String[] getStatistics(){
+        String[] array = new String[8];
+        array[0] = map.getAnimalCount()+"";
+        array[1] = map.getPlantCount()+"";
+        array[2] = map.getEmptyFileds()+"";
+        array[3] = map.getEnergyAverage()+"";
+        array[4] = map.getLifeLengthAverage()+"";
+        String[] tmp = map.getMostPopularGenotypes();
+        array[5] = tmp[0];
+        array[6] = tmp[1];
+        array[7] = tmp[2];
+        return array;
     }
     public void run(){
 
         this.map.grow();
-
         while (this.map.getAnimalCount() > 0){
 //            System.out.println(this.map.getAnimalCount());
 //            System.out.print(this.map);
@@ -92,6 +112,11 @@ public class SimulationEngine implements Runnable{
             this.map.consume();
             this.map.multiplicate();
             this.map.grow();
+            try {
+                writter.writeline(getStatistics());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 //            this.gridFiller.fillGrid();
             Platform.runLater(this.gridFiller);
             Platform.runLater(this.statisticFiller);
@@ -112,6 +137,19 @@ public class SimulationEngine implements Runnable{
                         break;
                     }
                 }
+                if(stopped){
+                    try {
+                        writter.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try{
+                        pauseLock.wait();
+                    } catch (InterruptedException e) {
+                        return;
+//                        Thread.currentThread().interrupt();
+                    }
+                }
             }
         }
     }
@@ -119,7 +157,9 @@ public class SimulationEngine implements Runnable{
     public void pause() {
         paused = true;
     }
-
+    public void stop(){
+        stopped = true;
+    }
     public void resume() {
         synchronized (pauseLock) {
             paused = false;

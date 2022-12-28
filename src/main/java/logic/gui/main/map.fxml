@@ -51,12 +51,12 @@
             <Label fx:id="s8" text="Label" />
          </children>
       </VBox>
-      <VBox fx:id="animalStatistics" layoutX="720.0" layoutY="123.0" prefHeight="115.0" prefWidth="231.0">
+      <VBox fx:id="animalStatistics" layoutX="720.0" layoutY="123.0" prefHeight="119.0" prefWidth="281.0">
          <children>
             <HBox prefHeight="11.0" prefWidth="100.0">
                <children>
                   <Label prefWidth="130.0" text="Genom:" />
-                  <Label text="0" />
+                  <Label prefHeight="17.0" prefWidth="153.0" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="11.0" prefWidth="100.0">
@@ -99,6 +99,6 @@
       </VBox>
       <Button layoutX="800.0" layoutY="68.0" mnemonicParsing="false" onAction="#stop" text="Przerwij" />
       <Button layoutX="720.0" layoutY="252.0" mnemonicParsing="false" onAction="#startTracking" text="Zacznij śledzić" />
-      <Button layoutX="719.0" layoutY="285.0" mnemonicParsing="false" onAction="#mostPopular" prefHeight="25.0" prefWidth="162.0" text="Najpopularniejszy genotyp" />
+      <Button layoutX="719.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" text="Najpopularniejszy genotyp" />
    </children>
 </AnchorPane>

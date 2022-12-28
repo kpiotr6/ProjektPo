@@ -93,4 +93,19 @@ public class ToxicPlantator extends Plantator {
         }
         specialPlantsNum--;
     }
+
+    @Override
+    public void startPlants() {
+        for(int i=0;i<map.config.getStartPlantNumber();i++) {
+            if (normalPlantsNum + specialPlantsNum == map.height * map.width) {
+                return;
+            }
+            Vector2d tmpVector = new Vector2d(map.generateNumber(0, map.getWidth() - 1), map.generateNumber(0, map.getHeight() - 1));
+            while (this.map.plantAt(tmpVector) != null) {
+                tmpVector = new Vector2d(map.generateNumber(0, map.getWidth() - 1), map.generateNumber(0, map.getHeight() - 1));
+            }
+            this.specialPlantsNum += 1;
+            this.map.addPlant(new Plant(this.map, tmpVector), tmpVector);
+        }
+    }
 }

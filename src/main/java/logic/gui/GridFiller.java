@@ -56,8 +56,8 @@ public class GridFiller implements Runnable{
                         e = iterator.next();
                     }
                     else{
-                        new MapElementRepresentation(config);
-                        iterator.add(new MapElementRepresentation(config));
+                        new MapElementRepresentation(config,engine);
+                        iterator.add(new MapElementRepresentation(config,engine));
                         e = iterator.previous();
                         iterator.next();
                     }
@@ -66,15 +66,18 @@ public class GridFiller implements Runnable{
                         img.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                             @Override
                             public void handle(MouseEvent event) {
+                                engine.trackedAnimal = (Animal)o;
                                 engine.startTracking((Animal)o);
                                 event.consume();
+
                             }
                         });
+
                     }
 
                     img.setFitHeight(grid.getRowConstraints().get(0).getPrefHeight());
                     img.setFitWidth(grid.getRowConstraints().get(0).getPrefHeight());
-                    grid.add(img,x,config.getHeight()-y);
+                    grid.add(img,x,config.getHeight()-y-1);
                 }
 
             }
@@ -82,23 +85,9 @@ public class GridFiller implements Runnable{
         grid.setGridLinesVisible(false);
         grid.setGridLinesVisible(true);
     }
-    public void fillStats(){
-        allStats.get(0).setText(map.getAnimalCount()+"");
-        allStats.get(1).setText(map.getPlantNumber()+"");
-        int k =0;
-        for(int i=0;i<map.getWidth();i++){
-            for(int j=0;j<map.getHeight();j++){
-                if(map.isOccupied(new Vector2d(i,j))){
-                    k++;
-                }
-            }
-        }
-        allStats.get(2).setText(map.getWidth()*map.getHeight()-k+"");
-        allStats.get(3).setText(map.getAverageEnergy()+"");
-        allStats.get(4).setText(map.getAverageLifespan()+"");
-    }
+
     public void run(){
         fillGrid();
-        fillStats();
+
     }
 }
