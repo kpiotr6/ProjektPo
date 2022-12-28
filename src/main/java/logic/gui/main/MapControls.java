@@ -13,9 +13,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 import javafx.stage.Stage;
+import logic.CSVWritter;
 import logic.Starter;
 import logic.simulation.SimulationEngine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class MapControls {
     Stage map;
     SimulationEngine simulationEngine = null;
     Thread thread;
+    CSVWritter writter = new CSVWritter();
     @FXML
     private GridPane grid;
     @FXML
@@ -31,41 +34,30 @@ public class MapControls {
     private VBox allStatistics;
 
 
-    private SimulationEngine simulationEngine;
 
 
-    public void run(Starter s){
+    public void run(Starter s) throws IOException {
+        writter.open();
         grid.getChildren().clear();
         double size = Math.min(700/s.getWidth(),700/s.getHeight());
-        for(int i=0;i<s.getHeight();i++){
+        for(int i=0;i<s.getWidth();i++){
             grid.getColumnConstraints().add(new ColumnConstraints(size,size,size));
         }
-        for(int i=0;i<s.getWidth();i++){
+        for(int i=0;i<s.getHeight();i++){
             grid.getRowConstraints().add(new RowConstraints(size,size,size));
 //            System.out.println(grid.getRowConstraints().get(0));
         }
         List<Label> list= new ArrayList<>();
-        list.add(s1);
-        list.add(s2);
-        list.add(s3);
-        list.add(s4);
-        list.add(s5);
-        list.add(s6);
-        list.add(s7);
-        list.add(s8);
+
         try{
 
-            simulationEngine = new SimulationEngine(s,grid, allStatistics, animalStatistics);
-            this.simulationEngine = simulationEngine;
-            Thread thread = new Thread(simulationEngine);
-
+            simulationEngine = new SimulationEngine(s,grid, allStatistics, animalStatistics,writter);
+            thread = new Thread(simulationEngine);
             thread.start();
 
         }
         catch (Exception e){
             e.printStackTrace();
-            System.out.println(simulationEngine.getMap().getHeight());
-            System.out.println(simulationEngine.getMap().getWidth());
         }
 
     }
@@ -80,14 +72,11 @@ public class MapControls {
         }
     }
     public void stop(ActionEvent e){
-        System.out.println("dasdasd");
-        thread.stop();
+//        System.out.println("dasdasd");
+        simulationEngine.stop();
     }
     public void startTracking(ActionEvent e){
         if(!this.simulationEngine.paused) return;
-
-    }
-    public void mostPopular(ActionEvent e){
 
     }
 }

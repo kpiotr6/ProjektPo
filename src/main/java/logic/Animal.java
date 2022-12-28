@@ -20,7 +20,6 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     protected int died;
     protected boolean dead;
     protected boolean mostPopular;
-
     public  Animal(Vector2d position,int[] genome,int energy,AbstractWorldMap map){
         super(map,position);
         Random random = new Random();
@@ -36,6 +35,9 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         this.mostPopular = false;
         mutate();
     }
+
+
+
     public void mutate(){
         int min = map.config.getMinimumMutation();
         int max = map.config.getMaximumMutation();

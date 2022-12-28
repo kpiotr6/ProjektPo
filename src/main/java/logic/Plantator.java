@@ -21,7 +21,7 @@ public abstract class Plantator {
     public abstract boolean isSpecialPlant();
     public abstract boolean isSpecialField(Vector2d position);
     public abstract void plantEaten(Vector2d position);
-
+    public abstract void startPlants();
     public int getPlantNum(){
         return  specialPlantsNum + normalPlantsNum;
     }
