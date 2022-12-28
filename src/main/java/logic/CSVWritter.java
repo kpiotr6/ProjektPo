@@ -37,7 +37,6 @@ public class CSVWritter {
         writer.write(builder.toString());
     }
     public void close() throws IOException {
-        writer.flush();
         writer.close();
         opened = false;
     }

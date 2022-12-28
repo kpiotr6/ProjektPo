@@ -23,7 +23,9 @@ public class Starter {
     private int genomeLength;
     private AnimalBehaviour animalBehaviour;
     public Starter(){
-
+        if(!check()){
+            throw new RuntimeException("Niepoprawne dane");
+        }
     }
     public Starter(int height, int width, MapType mapType, int startPlantNumber, int plantEnergy, int newPlants, PlantType plantType, int startAnimalNumber, int startAnimalEnergy, int energyToReproduce, int energyToChild, int minimumMutation, int maximumMutation, MutationType mutationType, int genomeLength, AnimalBehaviour animalBehaviour) {
         this.height = height;
@@ -42,8 +44,23 @@ public class Starter {
         this.mutationType = mutationType;
         this.genomeLength = genomeLength;
         this.animalBehaviour = animalBehaviour;
+        if(!check()){
+            throw new RuntimeException("Niepoprawne dane");
+        }
     }
+    public boolean check(){
+        if(energyToReproduce<=energyToChild){
+            return false;
+        }
+        if(minimumMutation>maximumMutation){
+            return false;
+        }
+        if(genomeLength<maximumMutation){
+            return false;
+        }
+        return true;
 
+    }
     public int getHeight() {
         return height;
     }
@@ -116,59 +133,5 @@ public class Starter {
         this.width = width;
     }
 
-    public void setMapType(MapType mapType) {
-        this.mapType = mapType;
-    }
 
-    public void setStartPlantNumber(int startPlantNumber) {
-        this.startPlantNumber = startPlantNumber;
-    }
-
-    public void setPlantEnergy(int plantEnergy) {
-        this.plantEnergy = plantEnergy;
-    }
-
-    public void setNewPlants(int newPlants) {
-        this.newPlants = newPlants;
-    }
-
-    public void setPlantType(PlantType plantType) {
-        this.plantType = plantType;
-    }
-
-    public void setStartAnimalNumber(int startAnimalNumber) {
-        this.startAnimalNumber = startAnimalNumber;
-    }
-
-    public void setStartAnimalEnergy(int startAnimalEnergy) {
-        this.startAnimalEnergy = startAnimalEnergy;
-    }
-
-    public void setEnergyToReproduce(int energyToReproduce) {
-        this.energyToReproduce = energyToReproduce;
-    }
-
-    public void setEnergyToChild(int energyToChild) {
-        this.energyToChild = energyToChild;
-    }
-
-    public void setMinimumMutation(int minimumMutation) {
-        this.minimumMutation = minimumMutation;
-    }
-
-    public void setMaximumMutation(int maximumMutation) {
-        this.maximumMutation = maximumMutation;
-    }
-
-    public void setMutationType(MutationType mutationType) {
-        this.mutationType = mutationType;
-    }
-
-    public void setGenomeLength(int genomeLength) {
-        this.genomeLength = genomeLength;
-    }
-
-    public void setAnimalBehaviour(AnimalBehaviour animalBehaviour) {
-        this.animalBehaviour = animalBehaviour;
-    }
 }

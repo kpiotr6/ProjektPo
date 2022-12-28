@@ -19,9 +19,9 @@ import logic.enums.AnimalBehaviour;
 import logic.enums.MapType;
 import logic.enums.MutationType;
 import logic.enums.PlantType;
+
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 
 public class AppControls {
@@ -95,21 +95,21 @@ public class AppControls {
         plant.getItems().add(PlantType.EQUATOR);
         plant.getItems().add(PlantType.TOXIC_CORPSES);
         SpinnerValueFactory<Integer> factory;
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2,300);
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2,50);
         height.setValueFactory(factory);
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2,300);
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2,50);
         width.setValueFactory(factory);
         factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300);
         energyToChild.setValueFactory(factory);
         factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300); //TODO: Ustawić w zależności od energy to child
         energyToReproduce.setValueFactory(factory);
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10);
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10); //TODO: Converter do factory?
         genomeLength.setValueFactory(factory);
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10); //TODO: jak wyżej
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10); //TODO: jak wyżej
         minimumMutation.setValueFactory(factory);
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,10); //TODO: jak wyżej
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10); //TODO: jak wyżej
         maximumMutation.setValueFactory(factory);
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300);
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100);
         newPlants.setValueFactory(factory);
         factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300);
         plantEnergy.setValueFactory(factory);
@@ -117,7 +117,7 @@ public class AppControls {
         plantNumber.setValueFactory(factory);
         factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300);
         startAnimalEnergy.setValueFactory(factory);
-        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,300);
+        factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,50);
         startAnimalNumber.setValueFactory(factory);
 
 
@@ -173,6 +173,10 @@ public class AppControls {
         Scene scene = new Scene(root);
         MapControls controls = loader.getController();
         stage.setOnCloseRequest(event -> {controls.stop(null);});
+        app.maps.add(controls);
+//        stage.initOwner(app.mainStage);
+//        stage.initModality(Modality.NONE);
+        stage.setResizable(false);
         controls.setStage(stage);
         controls.run(s);
         stage.setScene(scene);

@@ -1,6 +1,8 @@
 package logic;
 
 import javafx.application.Application;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import logic.enums.AnimalBehaviour;
 import logic.enums.MapType;
 import logic.enums.MutationType;
@@ -16,7 +18,10 @@ public class Main {
         try{
             Application.launch(App.class,args);
         }catch(Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR,e.getMessage(), ButtonType.OK);
+            alert.showAndWait();
+//            e.printStackTrace();
         }
 
 //        Starter starter = new Starter(
