@@ -16,7 +16,7 @@ public class MadAnimal extends Animal {
         }
         else{
             int old = activated;
-            while(old == activated) {
+            while(old == activated && genome.length != 1) {
                 activated = random.nextInt(genome.length);
             }
         }

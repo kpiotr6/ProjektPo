@@ -61,6 +61,16 @@ public class AnimalStatisticFiller implements Runnable{
         }
     }
 
+    public void eraseLabels(){
+        var children = allStatistics.getChildren();
+        int index = 0;
+        for (Node child : children) {
+            String text = "";
+            ((Label) (((HBox) child).getChildren()).get(1)).setText(text);
+            index += 1;
+        }
+    }
+
     @Override
     public void run() {
         fillLabels();

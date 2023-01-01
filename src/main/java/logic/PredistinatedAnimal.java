@@ -12,6 +12,5 @@ public class PredistinatedAnimal extends Animal{
         Vector2d oldPosition = position;
         Vector2d tmpPosition = position.add(mapDirection.toUnitVector());
         map.applyMovementEffects(this,oldPosition,tmpPosition);
-
     }
 }

@@ -77,7 +77,8 @@ public class MapControls {
         map.close();
     }
     public void startTracking(ActionEvent e){
-        if(!this.simulationEngine.paused) return;
-
+        //Stop tracking
+        this.simulationEngine.tracking = false;
+        this.simulationEngine.eraseAnimalStatistic();
     }
 }
