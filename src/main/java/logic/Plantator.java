@@ -21,4 +21,5 @@ public abstract class Plantator {
     public int getPlantNum(){
         return  specialPlantsNum + normalPlantsNum;
     }
+    public int getSpecialPlantsNum(){return specialPlantsNum;};
 }

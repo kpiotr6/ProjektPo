@@ -43,6 +43,13 @@ public abstract class AbstractWorldMap{
         plantator.startPlants();
     }
 
+    public HashMap<Vector2d, SortedSet<Animal>> getAnimals(){
+        return this.animals;
+    }
+
+    public Plantator getPlantator(){
+        return this.plantator;
+    }
     public int getAnimalCount() {
         return animalCount;
     }
@@ -168,9 +175,7 @@ public abstract class AbstractWorldMap{
         for (var e:animals.entrySet()) {
             var a = e.getValue();
             for (Animal el:a) {
-
                 el.move();
-
             }
         }
         var tmp = newAnimals;

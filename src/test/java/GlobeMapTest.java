@@ -18,7 +18,7 @@ public class GlobeMapTest {
             index += 1;
         }
 
-        SimulationTestEngine engine = new SimulationTestEngine(map, animals);
+        SimulationTestEngine engine = new SimulationTestEngine(map, animals, 1);
 
         engine.run();
 
@@ -28,19 +28,19 @@ public class GlobeMapTest {
     @Test
     public void sideTest(){
         Starter starter = new Starter(
-                30,//        height
-                30,//        width
+                5,//        height
+                5,//        width
                 MapType.GLOBE,//        mapType
                 5,//        startPlantNumber
                 20,//        plantEnergy
                 20,//        newPlants
                 PlantType.EQUATOR,//        plantType
-                5,//        startAnimalNumber
+                2,//        startAnimalNumber
                 5,//        startAnimalEnergy
                 30,//        energyToReproduce
                 10,//        energyToChild
-                3,//        minimumMutation
-                10,//        maximumMutation
+                0,//        minimumMutation
+                0,//        maximumMutation
                 MutationType.LIGHT_ADJUSTMENT,//        mutationType
                 4,//        genomeLength
                 AnimalBehaviour.FULL_PREDISTINATION//        animalBehaviour
@@ -59,19 +59,19 @@ public class GlobeMapTest {
     @Test
     public void polesTest(){
         Starter starter = new Starter(
-                30,//        height
-                30,//        width
+                5,//        height
+                5,//        width
                 MapType.GLOBE,//        mapType
                 5,//        startPlantNumber
                 20,//        plantEnergy
                 20,//        newPlants
                 PlantType.EQUATOR,//        plantType
-                5,//        startAnimalNumber
+                2,//        startAnimalNumber
                 5,//        startAnimalEnergy
                 30,//        energyToReproduce
                 10,//        energyToChild
-                3,//        minimumMutation
-                10,//        maximumMutation
+                0,//        minimumMutation
+                0,//        maximumMutation
                 MutationType.LIGHT_ADJUSTMENT,//        mutationType
                 4,//        genomeLength
                 AnimalBehaviour.FULL_PREDISTINATION//        animalBehaviour
@@ -90,19 +90,19 @@ public class GlobeMapTest {
     @Test
     public void cornerTest(){
         Starter starter = new Starter(
-                30,//        height
-                30,//        width
+                5,//        height
+                5,//        width
                 MapType.GLOBE,//        mapType
                 5,//        startPlantNumber
                 20,//        plantEnergy
                 20,//        newPlants
                 PlantType.EQUATOR,//        plantType
-                5,//        startAnimalNumber
+                2,//        startAnimalNumber
                 5,//        startAnimalEnergy
                 30,//        energyToReproduce
                 10,//        energyToChild
-                3,//        minimumMutation
-                10,//        maximumMutation
+                0,//        minimumMutation
+                0,//        maximumMutation
                 MutationType.LIGHT_ADJUSTMENT,//        mutationType
                 4,//        genomeLength
                 AnimalBehaviour.FULL_PREDISTINATION//        animalBehaviour
