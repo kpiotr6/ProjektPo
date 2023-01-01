@@ -19,7 +19,6 @@ public class SimulationTestEngine {
 
     public void run(){
         while (this.map.getAnimalCount() > 0){
-//            System.out.println(this.map.getAnimalCount());
             System.out.print(this.map);
             if(params == 1){
                 this.map.kill();
@@ -46,8 +45,6 @@ public class SimulationTestEngine {
                 return;
             }
 
-
-            //TimeUnit.SECONDS.sleep(2);
         }
     }
 }

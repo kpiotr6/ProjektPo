@@ -10,7 +10,6 @@ public abstract class AbstractWorldMap{
     protected HashMap<Vector2d, Plant> newPlants = new HashMap<>();
     protected HashMap<Vector2d, SortedSet<Animal>> animals = new HashMap<>();
     protected HashMap<Vector2d, SortedSet<Animal>> newAnimals = new HashMap<>();
-    //protected HashMap<Vector2d,Integer> toxic = new HashMap<>();
     final protected List<Animal> deadAnimals = new LinkedList<>();
     protected Starter config;
     protected Plantator plantator;
@@ -210,12 +209,7 @@ public abstract class AbstractWorldMap{
             Animal second = it.next();
             int[] childGenome = new int[config.getGenomeLength()];
             int firstGenes = config.getGenomeLength()*first.getEnergy()/(first.getEnergy()+ second.getEnergy());
-//            if(firstGenes == 0){
-//               firstGenes = 1;
-//            }
-//            if(firstGenes == config.getGenomeLength()){
-//                firstGenes = config.getGenomeLength()-1;
-//            }
+
             int secondGenes = config.getGenomeLength() - firstGenes;
             Random random = new Random();
 

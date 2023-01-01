@@ -77,8 +77,7 @@ public class AppControls {
 
     @FXML
     private Spinner<Integer> startAnimalNumber;
-    @FXML
-    private AnchorPane anchor;
+
     @FXML
     private Spinner<Integer> width;
     Window main;
@@ -165,7 +164,6 @@ public class AppControls {
         source.setText(choosen.getPath());
     }
     private void newWindow(Starter s) throws IOException {
-//        currSim+=1;
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         FXMLLoader loader = new FXMLLoader(new File("src/main/java/logic/gui/main/map.fxml").toURI().toURL());
@@ -174,8 +172,6 @@ public class AppControls {
         MapControls controls = loader.getController();
         stage.setOnCloseRequest(event -> {controls.stop(null);});
         app.maps.add(controls);
-//        stage.initOwner(app.mainStage);
-//        stage.initModality(Modality.NONE);
         stage.setResizable(false);
         controls.setStage(stage);
         controls.run(s);

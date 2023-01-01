@@ -46,8 +46,6 @@ public class App extends Application {
             scene = new Scene(root);
             AppControls appControls = loader.getController();
             appControls.setApp(this);
-//        ObservableList<Node> list= root.getChildren();
-//        list.
 
     }
 
