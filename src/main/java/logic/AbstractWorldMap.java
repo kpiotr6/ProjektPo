@@ -169,7 +169,9 @@ public abstract class AbstractWorldMap{
         for (var e:animals.entrySet()) {
             var a = e.getValue();
             for (Animal el:a) {
+                System.out.println("start");
                 el.move();
+                System.out.println("stop");
             }
         }
         var tmp = newAnimals;
@@ -225,8 +227,8 @@ public abstract class AbstractWorldMap{
             int childEnergy = config.getEnergyToChild();
             Animal child =
             switch (config.getAnimalBehaviour()){
-                case A_LITTLE_BIT_OF_MADNESS -> new PredistinatedAnimal(first.getPosition(),childGenome,childEnergy,this);
-                case FULL_PREDISTINATION ->  new MadAnimal(first.getPosition(),childGenome,childEnergy,this);
+                case FULL_PREDISTINATION -> new PredistinatedAnimal(first.getPosition(),childGenome,childEnergy,this);
+                case A_LITTLE_BIT_OF_MADNESS ->  new MadAnimal(first.getPosition(),childGenome,childEnergy,this);
             };
             int firstEnergyDifference = childEnergy*first.getEnergy()/(first.getEnergy()+ second.getEnergy());
             int secondEnergyDifference = childEnergy-firstEnergyDifference;

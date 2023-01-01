@@ -12,7 +12,7 @@
       <GridPane fx:id="grid" gridLinesVisible="true" prefHeight="700.0" prefWidth="700.0">
 
       </GridPane>
-      <Button layoutX="720.0" layoutY="68.0" mnemonicParsing="false" onAction="#pause" text="Wstrzymaj" />
+      <Button layoutX="720.0" layoutY="68.0" mnemonicParsing="false" onAction="#pause" text="Wstrzymaj/Wznów" />
       <VBox fx:id="allStatistics" layoutX="720.0" layoutY="345.0" prefHeight="174.0" prefWidth="231.0">
          <children>
             <HBox prefHeight="11.0" prefWidth="100.0">
@@ -97,8 +97,8 @@
             </HBox>
          </children>
       </VBox>
-      <Button layoutX="800.0" layoutY="68.0" mnemonicParsing="false" onAction="#stop" text="Przerwij" />
-      <Button layoutX="720.0" layoutY="252.0" mnemonicParsing="false" onAction="#startTracking" text="Zacznij śledzić" />
+      <Button layoutX="840.0" layoutY="68.0" mnemonicParsing="false" onAction="#stop" text="Przerwij" />
+      <Button layoutX="720.0" layoutY="252.0" mnemonicParsing="false" onAction="#startTracking" text="Skończ śledzić" />
       <Button layoutX="719.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="162.0" text="Najpopularniejszy genotyp" />
    </children>
 </AnchorPane>

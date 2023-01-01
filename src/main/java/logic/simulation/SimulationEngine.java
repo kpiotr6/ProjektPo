@@ -166,4 +166,9 @@ public class SimulationEngine implements Runnable{
             pauseLock.notifyAll();
         }
     }
+
+    public void eraseAnimalStatistic(){
+        animalStatisticFiller.eraseLabels();
+        this.trackedAnimal = null;
+    }
 }
