@@ -78,22 +78,9 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
     public MapDirection getMapDirection() {
         return mapDirection;
     }
-    public AnimalData createAnimalData(){
-        return new AnimalData(
-                this.genome,
-                this.activated,
-                this.energy,
-                this.eaten,
-                this.children,
-                this.lives,
-                this.died
-        );
-    }
     public abstract void move();
 
-    public boolean isMostPopular() {
-        return mostPopular;
-    }
+
 
     public void setMapDirection(MapDirection mapDirection) {
         this.mapDirection = mapDirection;
@@ -103,17 +90,11 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         return genome;
     }
 
-    public void setGenome(int[] genome) {
-        this.genome = genome;
-    }
 
     public int getActivated() {
         return activated;
     }
 
-    public void setActivated(int activated) {
-        this.activated = activated;
-    }
 
     public int getEnergy() {
         return energy;
@@ -136,33 +117,19 @@ public abstract class Animal extends AbstractMapElement implements Comparable<An
         return eaten;
     }
 
-    public void setEaten(int eaten) {
-        this.eaten = eaten;
-    }
+
 
     public int getChildren() {
         return children;
     }
 
-    public void setChildren(int children) {
-        this.children = children;
-    }
+
 
     public int getLives() {
         return lives;
     }
 
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
 
-    public int getDied() {
-        return died;
-    }
-
-    public void setDied(int died) {
-        this.died = died;
-    }
 
     public boolean isDead() {
         if(energy <= 0){

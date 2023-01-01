@@ -32,21 +32,7 @@ public class SimulationEngine implements Runnable{
     private final Object pauseLock = new Object();
 
 
-    //    public SimulationEngine(AbstractWorldMap map, Vector2d[] positions, int[][] genoms, Starter config){
-//        int index = 0;
-//        for ( Vector2d position: positions) {
-//            Animal currAnimal;
-//            if (config.getAnimalBehaviour() == AnimalBehaviour.FULL_PREDISTINATION){
-//                currAnimal = new MadAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
-//            }
-//            else{
-//                currAnimal = new PredistinatedAnimal(position, genoms[index], config.getStartAnimalEnergy(), map);
-//            }
-//            map.initAnimal(currAnimal);
-//            index += 1;
-//        }
-//        this.map = map;
-//    }
+
     public AbstractWorldMap getMap(){
         return map;
     }
@@ -105,8 +91,7 @@ public class SimulationEngine implements Runnable{
 
         this.map.grow();
         while (this.map.getAnimalCount() > 0){
-//            System.out.println(this.map.getAnimalCount());
-//            System.out.print(this.map);
+
             this.map.kill();
             this.map.move();
             this.map.consume();
@@ -123,7 +108,7 @@ public class SimulationEngine implements Runnable{
             if(this.tracking){
                 Platform.runLater(this.animalStatisticFiller);
             }
-            //System.out.println(map.getAnimalCount());
+
             try{
                 TimeUnit.MILLISECONDS.sleep(100);
             }catch (Exception e){

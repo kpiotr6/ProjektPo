@@ -33,7 +33,6 @@ public class CSVWritter {
         }
         builder.deleteCharAt(builder.length()-1);
         builder.append("\n");
-//        System.out.println(builder.toString());
         writer.write(builder.toString());
     }
     public void close() throws IOException {
