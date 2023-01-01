@@ -45,9 +45,7 @@ public class MapControls {
         }
         for(int i=0;i<s.getHeight();i++){
             grid.getRowConstraints().add(new RowConstraints(size,size,size));
-//            System.out.println(grid.getRowConstraints().get(0));
         }
-        List<Label> list= new ArrayList<>();
 
         try{
 
@@ -72,12 +70,10 @@ public class MapControls {
         }
     }
     public void stop(ActionEvent e){
-//        System.out.println("dasdasd");
         simulationEngine.stop();
         map.close();
     }
     public void startTracking(ActionEvent e){
-        //Stop tracking
         this.simulationEngine.tracking = false;
         this.simulationEngine.eraseAnimalStatistic();
     }
